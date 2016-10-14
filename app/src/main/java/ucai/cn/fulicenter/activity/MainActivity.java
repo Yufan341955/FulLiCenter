@@ -28,18 +28,22 @@ public class MainActivity extends AppCompatActivity {
     public void onCheckedChange(View v){
         switch (v.getId()){
             case R.id.rbtn_newGoods:
-                singleChecked((RadioButton) v);
+             singleChecked((RadioButton) v);
             break;
             case R.id.rbtn_boutique:
+
                 singleChecked((RadioButton) v);
             break;
             case R.id.rbtn_category:
+
                 singleChecked((RadioButton) v);
             break;
             case R.id.rbtn_cart:
+
                 singleChecked((RadioButton) v);
             break;
             case R.id.rbtn_prosen:
+
                 singleChecked((RadioButton) v);
             break;
         }

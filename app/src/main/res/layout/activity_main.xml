@@ -7,10 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#4545f1"
-        android:layout_above="@+id/radioGroup"
+        android:layout_above="@+id/linaer"
         />
-    <RadioGroup
-        android:id="@+id/radioGroup"
+    <LinearLayout
+        android:id="@+id/linaer"
        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -47,6 +47,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
+            style="@style/style_menu_item"
             >
             <RadioButton
                 android:id="@+id/rbtn_cart"
@@ -76,7 +77,7 @@
             android:text="我"
             android:textColor="@color/main_botton_text_color"
             android:button="@null"/>
-    </RadioGroup>
+    </LinearLayout>
     <ImageView
         android:id="@+id/iv"
         android:layout_width="match_parent"
