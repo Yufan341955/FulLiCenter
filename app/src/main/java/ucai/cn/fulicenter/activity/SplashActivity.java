@@ -1,11 +1,13 @@
 package ucai.cn.fulicenter.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import ucai.cn.fulicenter.R;
+import ucai.cn.fulicenter.utils.MFGT;
 
 public class SplashActivity extends AppCompatActivity {
     final long SPLASH_TIME=2000;
@@ -17,23 +19,33 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        new Thread(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                long startTime = SystemClock.currentThreadTimeMillis();
-                //BD耗时操作
-                long costTime = SystemClock.currentThreadTimeMillis()-startTime;
-                if(SPLASH_TIME-costTime>0){
-                    try {
-                        Thread.sleep(SPLASH_TIME-costTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                MFGT.gotoMainActivity(SplashActivity.this);
                 finish();
             }
-        }).start();
+        },SPLASH_TIME);
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                long startTime = SystemClock.currentThreadTimeMillis();
+//                //BD耗时操作
+//                long costTime = SystemClock.currentThreadTimeMillis()-startTime;
+//                if(SPLASH_TIME-costTime>0){
+//                    try {
+//                        Thread.sleep(SPLASH_TIME-costTime);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                MFGT.gotoMainActivity(SplashActivity.this);
+//                //startActivity(new Intent(SplashActivity.this,MainActivity.class));
+//                finish();
+//                //MFGT.finish(SplashActivity.this);
+//            }
+//        }).start();
 
     }
 }
