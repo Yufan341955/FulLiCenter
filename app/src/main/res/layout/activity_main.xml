@@ -2,21 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_height="1dp"
+        android:background="#4545f1"
+        android:layout_above="@+id/radioGroup"
+        />
     <RadioGroup
-        android:layout_weight="3"
-       android:id="@+id/radioGroup"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
+        android:id="@+id/radioGroup"
+       android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
        <RadioButton
            android:id="@+id/rbtn_newGoods"
-           style="@style/style_menu_item"
+           style="@style/menu_item_style"
+           android:layout_height="wrap_content"
            android:checked="true"
            android:drawableTop="@drawable/selector_menu_item_new_good"
            android:text="新品"
@@ -25,7 +27,8 @@
            android:button="@null"/>
        <RadioButton
            android:id="@+id/rbtn_boutique"
-           style="@style/style_menu_item"
+           style="@style/menu_item_style"
+           android:layout_height="wrap_content"
            android:text="精选"
            android:drawableTop="@drawable/selector_menu_item_boutique"
            android:textColor="@color/main_botton_text_color"
@@ -33,24 +36,23 @@
            android:button="@null"/>
        <RadioButton
            android:id="@+id/rbtn_category"
-           style="@style/style_menu_item"
+           style="@style/menu_item_style"
+           android:layout_height="wrap_content"
            android:text="分类"
            android:drawableTop="@drawable/selector_menu_item_category"
            android:gravity="center_horizontal"
            android:textColor="@color/main_botton_text_color"
            android:button="@null"/>
-    </RadioGroup>
         <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="60dp"
             android:layout_weight="1"
-            style="@style/style_menu_item"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
             >
             <RadioButton
                 android:id="@+id/rbtn_cart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/menu_item_style_cart"
                 android:text="购物车"
+                android:layout_height="wrap_content"
                 android:textColor="@color/main_botton_text_color"
                 android:drawableTop="@drawable/selector_menu_item_cart"
                 android:gravity="center_horizontal"
@@ -62,16 +64,23 @@
                 android:background="@drawable/cart_hint"
                 android:layout_alignRight="@id/rbtn_cart"
                 android:text="0"
-                android:textColor="#000"
+                android:textColor="#fff"
                 />
         </RelativeLayout>
         <RadioButton
-            android:id="@+id/mine"
-            style="@style/style_menu_item"
+            android:id="@+id/rbtn_prosen"
+            style="@style/menu_item_style"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/selector_menu_item_personal_center"
             android:gravity="center_horizontal"
             android:text="我"
             android:textColor="@color/main_botton_text_color"
             android:button="@null"/>
-    </LinearLayout>
+    </RadioGroup>
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tv"
+        />
 </RelativeLayout>
