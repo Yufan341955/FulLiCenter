@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/tv"
+    <View
+        android:id="@+id/vw"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#4545f1"
@@ -59,7 +59,7 @@
                 android:gravity="center_horizontal"
                 android:button="@null"/>
             <TextView
-                android:id="@+id/tvNum"
+                android:id="@+id/tvCarthint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/cart_hint"
@@ -78,10 +78,5 @@
             android:textColor="@color/main_botton_text_color"
             android:button="@null"/>
     </LinearLayout>
-    <ImageView
-        android:id="@+id/iv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/tv"
-        />
+
 </RelativeLayout>
