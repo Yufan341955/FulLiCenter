@@ -34,6 +34,10 @@ public class GoodsAdapter extends RecyclerView.Adapter{
         this.mGooodsList.addAll(mGooodsList);
         notifyDataSetChanged();
     }
+    public void addList(ArrayList<NewGoodsBean> mGooodsList){
+        this.mGooodsList.addAll(mGooodsList);
+        notifyDataSetChanged();
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

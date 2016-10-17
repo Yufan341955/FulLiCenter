@@ -84,7 +84,7 @@ public class NewGoodsFragment extends Fragment {
         mManager = new GridLayoutManager(getContext(), I.COLUM_NUM, GridLayoutManager.VERTICAL, false);
         mNewGoodsList = new ArrayList<NewGoodsBean>();
         mAdapter = new GoodsAdapter(mContext, mNewGoodsList);
-        //rvNewGoods.setHasFixedSize(true);
+        rvNewGoods.setHasFixedSize(true);
         rvNewGoods.setLayoutManager(mManager);
         rvNewGoods.setAdapter(mAdapter);
     }
