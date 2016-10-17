@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
+import ucai.cn.fulicenter.FuLiCenterApplication;
 import ucai.cn.fulicenter.I;
 import ucai.cn.fulicenter.bean.Result;
 import okhttp3.Cache;
@@ -144,7 +145,7 @@ public class OkHttpUtils<T> {
 
 
     private void initHandler() {
-        mHandler = new Handler(/**FuLiCenterApplication.applicationContext.getMainLooper()*/) {
+        mHandler = new Handler(FuLiCenterApplication.application.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {

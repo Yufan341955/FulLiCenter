@@ -29,6 +29,11 @@ public class GoodsAdapter extends RecyclerView.Adapter{
     public void setFooter(String footer){
         this.Footer=footer;
     }
+    public void initList(ArrayList<NewGoodsBean> mGooodsList){
+        this.mGooodsList.clear();
+        this.mGooodsList.addAll(mGooodsList);
+        notifyDataSetChanged();
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -51,13 +56,13 @@ public class GoodsAdapter extends RecyclerView.Adapter{
                NewGoodsBean newgood=mGooodsList.get(position);
                GoodsViewHolder viewHolder= (GoodsViewHolder) holder;
                viewHolder.tvNewGoods.setText(newgood.getGoodsName());
-               viewHolder.tvPerice.setText(newgood.getShopPrice());
-               //ImageLoader.downloadImg(mContext,viewHolder.ivGoods,);
+               viewHolder.tvPerice.setText(newgood.getCurrencyPrice());
+   //            ImageLoader.downloadImg(mContext,viewHolder.ivGoods,newgood.getGoodsThumb());
                ImageLoader.build(I.SERVER_ROOT+I.REQUEST_DOWNLOAD_IMAGE)
                        .addParam(I.IMAGE_URL,newgood.getGoodsThumb())
                        .defaultPicture(R.mipmap.goods_thumb)
-                       .width(160)
-                       .height(200)
+                       .width(150)
+                       .height(280)
                        .imageView(viewHolder.ivGoods)
                        .setDragging(true)
                        .listener(parent)

@@ -6,10 +6,21 @@ import android.app.Application;
  * Created by Administrator on 2016/10/17.
  */
 public class FuLiCenterApplication extends Application {
+    public static FuLiCenterApplication application;
+    private static FuLiCenterApplication instance;
 
-public static FuLiCenterApplication getInstance(){
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        application=this;
+        instance=this;
+    }
 
-        return null;
+    public static FuLiCenterApplication getInstance(){
+     if(instance==null){
+         instance=new FuLiCenterApplication();
+     }
+        return instance;
     }
 
 }
