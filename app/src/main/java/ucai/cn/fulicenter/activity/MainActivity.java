@@ -62,18 +62,19 @@ public class MainActivity extends AppCompatActivity {
                 index=0;
                 break;
             case R.id.rbtn_boutique:
-                index=0;
+                index=1;
                 break;
             case R.id.rbtn_category:
-                index=0;
+                index=2;
                 break;
             case R.id.rbtn_cart:
-                index=0;
+                index=3;
                 break;
             case R.id.rbtn_prosen:
-                index=0;
+                index=4;
                 break;
         }
+        singleChecked(index);
     }
 
     public void singleChecked(int index) {

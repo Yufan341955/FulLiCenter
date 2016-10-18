@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -58,15 +59,22 @@ public class NewGoodsFragment extends Fragment {
         NetDao.downlodaNewGoods(mContext, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
+             srl.setRefreshing(false);
+                tvRefesh.setVisibility(View.GONE);
                 if (result == null && result.length == 0) {
+
                     return;
                 }
                 ArrayList<NewGoodsBean> mlist = ConvertUtils.array2List(result);
+                mAdapter.setMore(true);
                 mAdapter.initList(mlist);
             }
 
             @Override
             public void onError(String error) {
+                srl.setRefreshing(false);
+                tvRefesh.setVisibility(View.GONE);
+                Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
                 L.e("error :" + error);
             }
         });

@@ -22,12 +22,20 @@ public class GoodsAdapter extends RecyclerView.Adapter{
     ArrayList<NewGoodsBean> mGooodsList;
     RecyclerView parent;
     String Footer;
+    boolean isMore;
     public GoodsAdapter(Context mContext, ArrayList<NewGoodsBean> mGooodsList) {
         this.mContext = mContext;
         this.mGooodsList = mGooodsList;
     }
-    public void setFooter(String footer){
-        this.Footer=footer;
+    public void setMore(boolean more){
+        this.isMore=more;
+        notifyDataSetChanged();
+    }
+    public boolean isMore(){
+        return this.isMore;
+    }
+    public String getFooter(){
+        return isMore?"加载更多数据":"没有更多可加载";
     }
     public void initList(ArrayList<NewGoodsBean> mGooodsList){
         this.mGooodsList.clear();
@@ -55,7 +63,7 @@ public class GoodsAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
            if(getItemViewType(position)==I.TYPE_FOOTER){
-               ((FooterViewHolder)holder).tvhint.setText(Footer);
+               ((FooterViewHolder)holder).tvhint.setText(getFooter());
            }else{
                NewGoodsBean newgood=mGooodsList.get(position);
                GoodsViewHolder viewHolder= (GoodsViewHolder) holder;
