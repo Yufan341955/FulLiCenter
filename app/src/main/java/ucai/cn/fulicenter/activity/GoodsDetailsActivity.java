@@ -1,5 +1,6 @@
 package ucai.cn.fulicenter.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -12,5 +13,6 @@ public class GoodsDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_details);
+        int goodsId = getIntent().getIntExtra("goodsId", 0);
     }
 }

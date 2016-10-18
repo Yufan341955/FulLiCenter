@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:gravity="center_horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="35dp"
+        android:orientation="horizontal"
         android:background="@color/good_detail_title_bg"
         >
+        <LinearLayout
+            android:id="@+id/backAuto"
+            android:layout_width="35dp"
+            android:layout_height="35dp">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:src="@mipmap/back_nomal"
             android:layout_marginLeft="5dp"
             />
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -21,47 +29,114 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="0dp"
             />
         <View
-            android:layout_width="230dp"
-            android:layout_height="match_parent"/>
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"/>
         <RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            style="@style/style_menu_item"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
             >
-            <RadioButton
+            <ImageView
                 android:id="@+id/cart"
-                style="@style/menu_item_style_cart"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/bg_cart_selected"
-                android:button="@null"/>
+                android:src="@mipmap/bg_cart_selected"
+                android:button="@null"
+                android:layout_marginTop="12dp"/>
             <TextView
                 android:id="@+id/Carthint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:text="0"
+                android:layout_toRightOf="@+id/cart"
                 android:textColor="#fff"
                 /></RelativeLayout>
-        <RadioButton
+        <ImageView
             android:id="@+id/collect"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:drawableTop="@mipmap/bg_collect_in"
+            android:src="@mipmap/bg_collect_in"
             android:layout_marginLeft="15dp"
             android:button="@null"
             android:layout_marginTop="12dp"
             />
-        <RadioButton
+        <ImageView
             android:id="@+id/share"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:drawableTop="@mipmap/bg_share_nor"
+            android:src="@mipmap/bg_share_nor"
             android:button="@null"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             />
     </LinearLayout>
+    <TextView
+        android:id="@+id/tvEnglishName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
+        android:layout_marginLeft="40dp"
+        android:text="lokkokopll;;ll"
+        android:textColor="#000"/>
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_below="@+id/tvEnglishName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="46412df45454545"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#000"
+        />
+    <TextView
+        android:id="@+id/tvPericeCurrent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
+       android:textColor="@color/good_detail_title_bg"
+        android:layout_marginLeft="250dp"
+        android:text="46543521"/>
+    <TextView
+        android:id="@+id/tvPericeShop"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPericeCurrent"
+        android:textColor="@color/good_detail_title_bg"
+        android:layout_marginLeft="250dp"
+        android:text="212121"/>
+    <ucai.cn.fulicenter.views.SlideAutoLoopView
+        android:id="@+id/Sav"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        />
+    <ucai.cn.fulicenter.views.FlowIndicator
+        android:id="@+id/flow"
+        android:layout_below="@+id/Sav"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        app:count="4"
+        app:focus="0"
+        app:focus_color="@color/good_detaul_flow_indicator_focus"
+        app:normal_color="@color/menu_item_normal"
+        app:r="5dp"
+        app:space="3dp"
+        />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/webView"
+        android:layout_below="@+id/flow"
+        android:layout_width="240dp"
+        android:layout_marginLeft="70dp"
+        android:layout_height="150dp"
+        android:text="4545454225"
+        />
+
+
+
 </RelativeLayout>
