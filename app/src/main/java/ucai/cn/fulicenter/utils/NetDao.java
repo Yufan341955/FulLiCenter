@@ -3,6 +3,7 @@ package ucai.cn.fulicenter.utils;
 import android.content.Context;
 
 import ucai.cn.fulicenter.I;
+import ucai.cn.fulicenter.bean.GoodsDetailsBean;
 import ucai.cn.fulicenter.bean.NewGoodsBean;
 
 /**
@@ -18,4 +19,13 @@ public class NetDao {
                   .targetClass(NewGoodsBean[].class)
                   .execute(listener);
     }
+    public static void downlodaGoodsDetails(Context context, int goodsId, OkHttpUtils.OnCompleteListener<GoodsDetailsBean> listener){
+        OkHttpUtils utils=new OkHttpUtils(context);
+        utils.setRequestUrl(I.REQUEST_FIND_GOOD_DETAILS)
+                .addParam(I.GoodsDetails.KEY_GOODS_ID,goodsId+"")
+                .targetClass(GoodsDetailsBean.class)
+                .execute(listener);
+
+    }
+
 }
