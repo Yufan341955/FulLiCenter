@@ -133,9 +133,9 @@
         android:id="@+id/wv_goods_brief"
         android:layout_below="@+id/flow"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
         android:text="4545454225"
         />
 
