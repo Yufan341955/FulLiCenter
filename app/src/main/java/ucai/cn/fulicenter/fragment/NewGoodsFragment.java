@@ -52,33 +52,85 @@ public class NewGoodsFragment extends Fragment {
         ButterKnife.bind(this, layout);
         initView();
         initData();
+        setListener();
         return layout;
     }
 
-    private void initData() {
-        NetDao.downlodaNewGoods(mContext, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
-            @Override
-            public void onSuccess(NewGoodsBean[] result) {
-             srl.setRefreshing(false);
-                tvRefesh.setVisibility(View.GONE);
-                if (result == null && result.length == 0) {
+    private void setListener() {
+        setPullDownListener();
+        setPullUpListener();
+    }
 
-                    return;
+    private void setPullUpListener() {
+        rvNewGoods.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int lastposistion=mManager.findLastVisibleItemPosition();
+                if(newState==RecyclerView.SCROLL_STATE_IDLE&&mAdapter.isMore()&&lastposistion>=mAdapter.getItemCount()-1){
+                    pageId++;
+                    initData();
                 }
-                ArrayList<NewGoodsBean> mlist = ConvertUtils.array2List(result);
-                mAdapter.setMore(true);
-                mAdapter.initList(mlist);
             }
 
             @Override
-            public void onError(String error) {
-                srl.setRefreshing(false);
-                tvRefesh.setVisibility(View.GONE);
-                Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
-                L.e("error :" + error);
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int firstposition=mManager.findFirstVisibleItemPosition();
+                srl.setEnabled(firstposition==0);
             }
         });
     }
+
+    private void setPullDownListener() {
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                srl.setRefreshing(true);
+                srl.setEnabled(true);
+                tvRefesh.setVisibility(View.VISIBLE);
+                pageId=1;
+                initData();
+            }
+        });
+    }
+
+    private void initData() {
+
+            NetDao.downlodaNewGoods(mContext, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+                @Override
+                public void onSuccess(NewGoodsBean[] result) {
+                    srl.setRefreshing(false);
+                    tvRefesh.setVisibility(View.GONE);
+                    if (result == null && result.length == 0) {
+                        mAdapter.setMore(false);
+                        return;
+                    }
+                    mAdapter.setMore(true);
+                    ArrayList<NewGoodsBean> mlist = ConvertUtils.array2List(result);
+                   if(mlist.size()<I.PAGE_SIZE_DEFAULT){
+                       mAdapter.setMore(false);
+                   }
+                    if(pageId==1){
+                        mAdapter.initList(mlist);
+                    }else{
+                        mAdapter.addList(mlist);
+                    }
+
+
+                }
+
+                @Override
+                public void onError(String error) {
+                    srl.setRefreshing(false);
+                    tvRefesh.setVisibility(View.GONE);
+                    mAdapter.setMore(false);
+                    Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
+                    L.e("error :" + error);
+                }
+            });
+    }
+
 
     private void initView() {
         mContext = (MainActivity) getContext();

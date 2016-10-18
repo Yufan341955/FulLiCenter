@@ -69,12 +69,12 @@ public class GoodsAdapter extends RecyclerView.Adapter{
                GoodsViewHolder viewHolder= (GoodsViewHolder) holder;
                viewHolder.tvNewGoods.setText(newgood.getGoodsName());
                viewHolder.tvPerice.setText(newgood.getCurrencyPrice());
-   //            ImageLoader.downloadImg(mContext,viewHolder.ivGoods,newgood.getGoodsThumb());
+   //           ImageLoader.downloadImg(mContext,viewHolder.ivGoods,newgood.getGoodsThumb());
                ImageLoader.build(I.SERVER_ROOT+I.REQUEST_DOWNLOAD_IMAGE)
                        .addParam(I.IMAGE_URL,newgood.getGoodsThumb())
                        .defaultPicture(R.mipmap.goods_thumb)
                        .width(150)
-                       .height(280)
+                       .height(230)
                        .imageView(viewHolder.ivGoods)
                        .setDragging(true)
                        .listener(parent)
