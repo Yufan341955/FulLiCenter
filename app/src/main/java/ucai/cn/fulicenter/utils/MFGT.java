@@ -1,6 +1,7 @@
 package ucai.cn.fulicenter.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 import ucai.cn.fulicenter.R;
@@ -20,5 +21,9 @@ public class MFGT {
         intent.setClass(context,cls);
         context.startActivity(intent);
         context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+    }
+    public static void startActivity(Context context, Intent intent){
+        context.startActivity(intent);
+        ((Activity)context).overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
     }
 }

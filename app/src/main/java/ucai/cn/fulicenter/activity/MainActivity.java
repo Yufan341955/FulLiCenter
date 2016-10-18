@@ -50,9 +50,10 @@ public class MainActivity extends AppCompatActivity {
         rbs[3]=rbtnCart;
         rbs[4]=rbtnProsen;
         mNewGoodsFragment=new NewGoodsFragment();
+
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction= manager.beginTransaction();
-                transaction.add(R.id.frame,mNewGoodsFragment);
+        transaction.add(R.id.frame,mNewGoodsFragment);
         transaction.commit();
     }
 

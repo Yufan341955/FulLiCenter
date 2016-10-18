@@ -2,18 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginRight="15dp"
-    android:layout_marginLeft="15dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginBottom="15dp"
     android:orientation="vertical"
     android:background="@color/list_background"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+
+    >
     <ImageView
-    android:id="@+id/iv_new_goods"
-    android:layout_width="150dp"
-    android:layout_height="230dp"
-    android:src="@mipmap/goods_thumb"
+        android:id="@+id/iv_new_goods"
+        android:layout_width="150dp"
+        android:layout_height="230dp"
+        android:src="@mipmap/goods_thumb"
     />
     <TextView
         android:id="@+id/tv_new_goods"
@@ -24,5 +22,6 @@
     <TextView
         android:id="@+id/tv_perice"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="h"/>
 </LinearLayout>

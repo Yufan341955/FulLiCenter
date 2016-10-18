@@ -1,18 +1,23 @@
 package ucai.cn.fulicenter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import ucai.cn.fulicenter.I;
 import ucai.cn.fulicenter.R;
+import ucai.cn.fulicenter.activity.GoodsDetailsActivity;
 import ucai.cn.fulicenter.bean.NewGoodsBean;
 import ucai.cn.fulicenter.utils.ImageLoader;
+import ucai.cn.fulicenter.utils.L;
+import ucai.cn.fulicenter.utils.MFGT;
 
 /**
  * Created by Administrator on 2016/10/17.
@@ -62,14 +67,17 @@ public class GoodsAdapter extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-           if(getItemViewType(position)==I.TYPE_FOOTER){
-               ((FooterViewHolder)holder).tvhint.setText(getFooter());
-           }else{
+           if(getItemViewType(position)==I.TYPE_FOOTER) {
+               ((FooterViewHolder) holder).tvhint.setText(getFooter());
+               return;
+           }
                NewGoodsBean newgood=mGooodsList.get(position);
                GoodsViewHolder viewHolder= (GoodsViewHolder) holder;
+
                viewHolder.tvNewGoods.setText(newgood.getGoodsName());
                viewHolder.tvPerice.setText(newgood.getCurrencyPrice());
-   //           ImageLoader.downloadImg(mContext,viewHolder.ivGoods,newgood.getGoodsThumb());
+               viewHolder.itemView.setTag(newgood.getGoodsId());
+            //ImageLoader.downloadImg(mContext,viewHolder.ivGoods,newgood.getGoodsThumb());
                ImageLoader.build(I.SERVER_ROOT+I.REQUEST_DOWNLOAD_IMAGE)
                        .addParam(I.IMAGE_URL,newgood.getGoodsThumb())
                        .defaultPicture(R.mipmap.goods_thumb)
@@ -80,7 +88,7 @@ public class GoodsAdapter extends RecyclerView.Adapter{
                        .listener(parent)
                        .showImage(mContext);
 
-           }
+
     }
 
     @Override
@@ -106,11 +114,22 @@ public class GoodsAdapter extends RecyclerView.Adapter{
     class GoodsViewHolder extends RecyclerView.ViewHolder{
         ImageView ivGoods;
         TextView tvNewGoods,tvPerice;
-        public GoodsViewHolder(View itemView) {
+        public GoodsViewHolder(final View itemView) {
             super(itemView);
             ivGoods= (ImageView) itemView.findViewById(R.id.iv_new_goods);
             tvNewGoods= (TextView) itemView.findViewById(R.id.tv_new_goods);
             tvPerice= (TextView) itemView.findViewById(R.id.tv_perice);
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                  int goodsId= (int) itemView.getTag();
+                    Intent intent=new Intent(mContext, GoodsDetailsActivity.class);
+                    intent.putExtra("goodsId",goodsId);
+                    MFGT.startActivity(mContext,intent);
+                }
+            });
         }
     }
 
