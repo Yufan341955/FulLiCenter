@@ -3,6 +3,7 @@ package ucai.cn.fulicenter.utils;
 import android.content.Context;
 
 import ucai.cn.fulicenter.I;
+import ucai.cn.fulicenter.bean.BoutiqueBean;
 import ucai.cn.fulicenter.bean.GoodsDetailsBean;
 import ucai.cn.fulicenter.bean.NewGoodsBean;
 
@@ -26,6 +27,12 @@ public class NetDao {
                 .targetClass(GoodsDetailsBean.class)
                 .execute(listener);
 
+    }
+    public static void downloadBoutidue(Context context, OkHttpUtils.OnCompleteListener<BoutiqueBean[]> listener){
+        OkHttpUtils utils=new OkHttpUtils(context);
+        utils.setRequestUrl(I.REQUEST_FIND_BOUTIQUES)
+                .targetClass(BoutiqueBean[].class)
+                .execute(listener);
     }
 
 }

@@ -31,7 +31,7 @@ import ucai.cn.fulicenter.utils.OkHttpUtils;
 /**
  * Created by Administrator on 2016/10/19.
  */
-public class BoutiqoeFragment extends Fragment {
+public class BoutiqoeFragment extends BaseFragment {
     @Bind(R.id.tvRefesh)
     TextView tvRefesh;
     @Bind(R.id.rvNewGoods)
@@ -50,13 +50,11 @@ public class BoutiqoeFragment extends Fragment {
         ButterKnife.bind(this, layout);
         mList=new ArrayList<>();
         mContext= (MainActivity) getContext();
-        initView();
-        initData();
-        setListener();
+        super.onCreateView(inflater, container, savedInstanceState);
         return layout;
     }
-
-    private void setListener() {
+   @Override
+    protected void setListener() {
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -67,12 +65,12 @@ public class BoutiqoeFragment extends Fragment {
             }
         });
     }
-
-    private void initData() {
+    @Override
+    protected void initData() {
         downloadBoutique(I.ACTION_DOWNLOAD);
     }
 
-    private void downloadBoutique(final int action) {
+    protected void downloadBoutique(final int action) {
         NetDao.downloadBoutidue(mContext, new OkHttpUtils.OnCompleteListener<BoutiqueBean[]>() {
             @Override
             public void onSuccess(BoutiqueBean[] result) {
@@ -104,8 +102,8 @@ public class BoutiqoeFragment extends Fragment {
             }
         });
     }
-
-    private void initView() {
+    @Override
+    protected void initView() {
         srl.setColorSchemeColors(
                 getResources().getColor(R.color.google_blue),
                 getResources().getColor(R.color.google_green),

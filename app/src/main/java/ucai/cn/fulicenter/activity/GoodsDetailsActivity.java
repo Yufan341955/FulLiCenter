@@ -15,6 +15,7 @@ import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.bean.AlbumsBean;
 import ucai.cn.fulicenter.bean.GoodsDetailsBean;
 import ucai.cn.fulicenter.utils.L;
+import ucai.cn.fulicenter.utils.MFGT;
 import ucai.cn.fulicenter.utils.NetDao;
 import ucai.cn.fulicenter.utils.OkHttpUtils;
 import ucai.cn.fulicenter.views.FlowIndicator;
@@ -116,11 +117,11 @@ public class GoodsDetailsActivity extends AppCompatActivity {
 
     @OnClick(R.id.backAuto)
     public void onClick() {
-        finish();
+        MFGT.finish(this);
     }
 
     @Override
     public void onBackPressed() {
-
+        MFGT.finish(this);
     }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import ucai.cn.fulicenter.R;
+import ucai.cn.fulicenter.fragment.BoutiqoeFragment;
 import ucai.cn.fulicenter.fragment.NewGoodsFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     RadioButton[] rbs;
     Fragment[] mFragments;
     NewGoodsFragment mNewGoodsFragment;
+    BoutiqoeFragment mboutiqoeFragment;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,17 +54,21 @@ public class MainActivity extends AppCompatActivity {
         rbs[3]=rbtnCart;
         rbs[4]=rbtnProsen;
         mNewGoodsFragment=new NewGoodsFragment();
-
+        mboutiqoeFragment=new BoutiqoeFragment();
+        mFragments[0]=mNewGoodsFragment;
+        mFragments[1]=mboutiqoeFragment;
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction= manager.beginTransaction();
-        transaction.add(R.id.frame,mNewGoodsFragment);
+        transaction.add(R.id.frame,mFragments[0]);
         transaction.commit();
     }
 
     public void onCheckedChange(View v) {
+
         switch (v.getId()) {
             case R.id.rbtn_newGoods:
                 index=0;
+
                 break;
             case R.id.rbtn_boutique:
                 index=1;
@@ -76,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         singleChecked(index);
+        changeFragment(index);
+    }
+
+    private void changeFragment(int index) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction= manager.beginTransaction();
+        transaction.replace(R.id.frame,mFragments[index]);
+        transaction.commit();
     }
 
     public void singleChecked(int index) {

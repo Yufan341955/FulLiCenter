@@ -26,7 +26,6 @@ public class GoodsAdapter extends RecyclerView.Adapter{
     Context mContext;
     ArrayList<NewGoodsBean> mGooodsList;
     RecyclerView parent;
-    String Footer;
     boolean isMore;
     public GoodsAdapter(Context mContext, ArrayList<NewGoodsBean> mGooodsList) {
         this.mContext = mContext;
