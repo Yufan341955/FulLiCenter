@@ -20,6 +20,15 @@ public class NetDao {
                   .targetClass(NewGoodsBean[].class)
                   .execute(listener);
     }
+    public static void downlodaGoods(Context context,int boutiqueId, int pageId, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
+          OkHttpUtils utils=new OkHttpUtils(context);
+          utils.setRequestUrl(I.REQUEST_FIND_NEW_BOUTIQUE_GOODS)
+                  .addParam(I.NewAndBoutiqueGoods.CAT_ID,String.valueOf(boutiqueId))
+                  .addParam(I.PAGE_ID,String.valueOf(pageId))
+                  .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
+                  .targetClass(NewGoodsBean[].class)
+                  .execute(listener);
+    }
     public static void downlodaGoodsDetails(Context context, int goodsId, OkHttpUtils.OnCompleteListener<GoodsDetailsBean> listener){
         OkHttpUtils utils=new OkHttpUtils(context);
         utils.setRequestUrl(I.REQUEST_FIND_GOOD_DETAILS)
