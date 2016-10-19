@@ -120,6 +120,7 @@ public class GoodsDetailsChildActivity extends AppCompatActivity {
                     return;
                 }
                 ArrayList<NewGoodsBean> list = ConvertUtils.array2List(result);
+                mAdapter.setMore(true);
                 switch (action) {
                     case I.ACTION_DOWNLOAD:
                         mAdapter.initData(list);
