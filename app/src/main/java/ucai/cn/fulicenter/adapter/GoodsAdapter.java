@@ -104,7 +104,7 @@ public class GoodsAdapter extends RecyclerView.Adapter{
             return I.TYPE_ITEM;
         }
     }
-    class FooterViewHolder extends RecyclerView.ViewHolder{
+    static class FooterViewHolder extends RecyclerView.ViewHolder{
         TextView tvhint;
         public FooterViewHolder(View itemView) {
             super(itemView);
