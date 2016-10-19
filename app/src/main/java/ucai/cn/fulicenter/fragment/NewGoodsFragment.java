@@ -59,6 +59,15 @@ public class NewGoodsFragment extends Fragment {
     private void setListener() {
         setPullDownListener();
         setPullUpListener();
+        mManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if(position==mNewGoodsList.size()){
+                    return 2;
+                }
+                return 1;
+            }
+        });
     }
 
     private void setPullUpListener() {

@@ -78,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="85dp"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="50dp"
         android:text="lokkokopll;;ll"
         android:textColor="#000"/>
     <TextView
@@ -87,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="46412df45454545"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="10dp"
         android:textColor="#000"
         />
@@ -97,7 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="85dp"
        android:textColor="@color/good_detail_title_bg"
-        android:layout_marginLeft="250dp"
+        android:layout_marginLeft="270dp"
         android:text="46543521"/>
     <TextView
         android:id="@+id/tvPericeShop"
@@ -106,13 +106,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvPericeCurrent"
         android:textColor="@color/good_detail_title_bg"
-        android:layout_marginLeft="250dp"
+        android:layout_marginLeft="270dp"
         android:text="212121"/>
     <ucai.cn.fulicenter.views.SlideAutoLoopView
         android:id="@+id/Sav"
         android:layout_marginTop="50dp"
         android:layout_below="@+id/tvName"
-        android:layout_width="wrap_content"
+        android:layout_marginLeft="75dp"
+        android:layout_width="300dp"
         android:layout_height="200dp"
         />
     <ucai.cn.fulicenter.views.FlowIndicator
@@ -120,7 +121,8 @@
         android:layout_below="@+id/Sav"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         app:count="4"
         app:focus="0"
         app:focus_color="@color/good_detaul_flow_indicator_focus"
@@ -133,7 +135,7 @@
         android:id="@+id/wv_goods_brief"
         android:layout_below="@+id/flow"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginLeft="100dp"
         android:layout_marginRight="100dp"
         android:text="4545454225"

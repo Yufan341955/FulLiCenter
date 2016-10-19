@@ -110,7 +110,7 @@ public class GoodsAdapter extends RecyclerView.Adapter{
             tvhint= (TextView) itemView.findViewById(R.id.tvhint);
         }
     }
-    class GoodsViewHolder extends RecyclerView.ViewHolder{
+     class GoodsViewHolder extends RecyclerView.ViewHolder{
         ImageView ivGoods;
         TextView tvNewGoods,tvPerice;
         public GoodsViewHolder(final View itemView) {
