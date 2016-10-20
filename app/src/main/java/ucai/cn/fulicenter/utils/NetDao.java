@@ -24,7 +24,7 @@ public class NetDao {
     }
     public static void downlodaGoods(Context context,int boutiqueId, int pageId, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
           OkHttpUtils utils=new OkHttpUtils(context);
-          utils.setRequestUrl(I.REQUEST_FIND_NEW_BOUTIQUE_GOODS)
+          utils.setRequestUrl(I.REQUEST_FIND_GOODS_DETAILS)
                   .addParam(I.NewAndBoutiqueGoods.CAT_ID,String.valueOf(boutiqueId))
                   .addParam(I.PAGE_ID,String.valueOf(pageId))
                   .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
