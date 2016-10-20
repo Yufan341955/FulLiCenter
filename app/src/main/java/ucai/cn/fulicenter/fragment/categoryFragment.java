@@ -49,15 +49,15 @@ public class CategoryFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-       elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-           @Override
-           public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-               L.e("onclick");
-              CategoryChildBean child= (CategoryChildBean) mAdapter.getChild(groupPosition,childPosition);
-
-               return true;
-           }
-       });
+//       elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//           @Override
+//           public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+//               L.e("onclick");
+//              CategoryChildBean child= (CategoryChildBean) mAdapter.getChild(groupPosition,childPosition);
+//
+//               return true;
+//           }
+//       });
     }
 
     @Override
