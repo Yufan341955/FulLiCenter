@@ -1,20 +1,26 @@
 package ucai.cn.fulicenter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ucai.cn.fulicenter.R;
+import ucai.cn.fulicenter.activity.CategoryChildActivity;
+import ucai.cn.fulicenter.activity.MainActivity;
 import ucai.cn.fulicenter.bean.CategoryChildBean;
 import ucai.cn.fulicenter.bean.CategoryGroupBean;
 import ucai.cn.fulicenter.utils.ImageLoader;
+import ucai.cn.fulicenter.utils.MFGT;
 
 /**
  * Created by Administrator on 2016/10/20.
@@ -25,11 +31,10 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
     ArrayList<ArrayList<CategoryChildBean>> mChildList;
 
 
-
-
     public CategoryAdapter(Context mContext, ArrayList<CategoryGroupBean> mGroupList,
                            ArrayList<ArrayList<CategoryChildBean>> mChildList) {
         this.mContext = mContext;
+
         this.mGroupList = new ArrayList<CategoryGroupBean>();
         this.mGroupList.addAll(mGroupList);
         this.mChildList = new ArrayList<ArrayList<CategoryChildBean>>();
@@ -76,34 +81,46 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         GroupViewHolder holder;
         if (convertView == null) {
             convertView = View.inflate(mContext, R.layout.item_categorygroup, null);
-            holder=new GroupViewHolder(convertView);
+            holder = new GroupViewHolder(convertView);
             convertView.setTag(holder);
-        }else{
-            holder= (GroupViewHolder) convertView.getTag();
+        } else {
+            holder = (GroupViewHolder) convertView.getTag();
         }
-        CategoryGroupBean group= (CategoryGroupBean) getGroup(groupPosition);
-        if(group!=null){
-            ImageLoader.downloadImg(mContext,holder.ivCategoryGroup,group.getImageUrl());
+        CategoryGroupBean group = (CategoryGroupBean) getGroup(groupPosition);
+        if (group != null) {
+            ImageLoader.downloadImg(mContext, holder.ivCategoryGroup, group.getImageUrl());
             holder.tvCategory.setText(group.getName());
-            holder.ivGroup.setImageResource(isExpanded?R.mipmap.expand_off:R.mipmap.expand_on);
+
+            holder.ivGroup.setImageResource(isExpanded ? R.mipmap.expand_off : R.mipmap.expand_on);
         }
         return convertView;
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ChildViewHolder holder;
         if (convertView == null) {
             convertView = View.inflate(mContext, R.layout.item_categorychild, null);
-            holder=new ChildViewHolder(convertView);
+            holder = new ChildViewHolder(convertView);
             convertView.setTag(holder);
-        }else {
-            holder= (ChildViewHolder) convertView.getTag();
+        } else {
+            holder = (ChildViewHolder) convertView.getTag();
         }
-        CategoryChildBean child= (CategoryChildBean) getChild(groupPosition,childPosition);
-        if(child!=null){
-            ImageLoader.downloadImg(mContext,holder.ivChild,child.getImageUrl());
+        final CategoryChildBean child = (CategoryChildBean) getChild(groupPosition, childPosition);
+        if (child != null) {
+            ImageLoader.downloadImg(mContext, holder.ivChild, child.getImageUrl());
             holder.tvCategoryGoodsName.setText(child.getName());
+            final CategoryGroupBean group = (CategoryGroupBean) getGroup(groupPosition);
+            holder.Child.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(mContext, CategoryChildActivity.class);
+                    intent.putExtra("id",child.getId());
+                    intent.putExtra("name",group.getName());
+                    MFGT.startActivity(mContext,intent);
+                }
+            });
+
         }
 
         return convertView;
@@ -120,14 +137,21 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
     }
 
+
+    }
+
+
     class ChildViewHolder {
-        @Bind(R.id.ivChild)
+
         ImageView ivChild;
-        @Bind(R.id.tv_Category_Goods_Name)
         TextView tvCategoryGoodsName;
+        LinearLayout Child;
 
         public ChildViewHolder(View view) {
-            ButterKnife.bind(this, view);
+            ivChild= (ImageView) view.findViewById(R.id.ivChild);
+            tvCategoryGoodsName= (TextView) view.findViewById(R.id.tv_Category_Goods_Name);
+            Child= (LinearLayout) view.findViewById(R.id.Child);
+
         }
 
     }
@@ -144,4 +168,4 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
             ButterKnife.bind(this, view);
         }
     }
-}
+

@@ -1,6 +1,7 @@
 package ucai.cn.fulicenter.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,11 +14,13 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import ucai.cn.fulicenter.R;
+import ucai.cn.fulicenter.activity.CategoryChildActivity;
 import ucai.cn.fulicenter.adapter.CategoryAdapter;
 import ucai.cn.fulicenter.bean.CategoryChildBean;
 import ucai.cn.fulicenter.bean.CategoryGroupBean;
 import ucai.cn.fulicenter.utils.ConvertUtils;
 import ucai.cn.fulicenter.utils.L;
+import ucai.cn.fulicenter.utils.MFGT;
 import ucai.cn.fulicenter.utils.NetDao;
 import ucai.cn.fulicenter.utils.OkHttpUtils;
 
@@ -46,7 +49,15 @@ public class CategoryFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
+       elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+           @Override
+           public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+               L.e("onclick");
+              CategoryChildBean child= (CategoryChildBean) mAdapter.getChild(groupPosition,childPosition);
 
+               return true;
+           }
+       });
     }
 
     @Override
