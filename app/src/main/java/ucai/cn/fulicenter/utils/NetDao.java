@@ -4,6 +4,8 @@ import android.content.Context;
 
 import ucai.cn.fulicenter.I;
 import ucai.cn.fulicenter.bean.BoutiqueBean;
+import ucai.cn.fulicenter.bean.CategoryChildBean;
+import ucai.cn.fulicenter.bean.CategoryGroupBean;
 import ucai.cn.fulicenter.bean.GoodsDetailsBean;
 import ucai.cn.fulicenter.bean.NewGoodsBean;
 
@@ -41,6 +43,18 @@ public class NetDao {
         OkHttpUtils utils=new OkHttpUtils(context);
         utils.setRequestUrl(I.REQUEST_FIND_BOUTIQUES)
                 .targetClass(BoutiqueBean[].class)
+                .execute(listener);
+    }
+    public static void downloadCategoryGroup(Context context, OkHttpUtils.OnCompleteListener<CategoryGroupBean[]> listener){
+           OkHttpUtils utils = new OkHttpUtils(context);
+          utils.setRequestUrl(I.REQUEST_FIND_CATEGORY_GROUP)
+                  .targetClass(CategoryGroupBean[].class)
+                  .execute(listener);
+    }
+    public static void downloadCategoryChild(Context context, OkHttpUtils.OnCompleteListener<CategoryChildBean[]> listener){
+        OkHttpUtils utils=new OkHttpUtils(context);
+        utils.setRequestUrl(I.REQUEST_FIND_CATEGORY_CHILDREN)
+                .targetClass(CategoryChildBean[].class)
                 .execute(listener);
     }
 
