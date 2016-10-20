@@ -1,6 +1,7 @@
 package ucai.cn.fulicenter.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -172,28 +173,35 @@ public class CategoryChildActivity extends AppCompatActivity {
 
     @OnClick({R.id.backAuto, R.id.btn_Price, R.id.btn_Time})
     public void onClick(View view) {
+        Drawable drawable;
         switch (view.getId()) {
             case R.id.btn_Price:
                 if(PriceAsc){
                     mAdapter.setSortBy(I.SORT_BY_PRICE_ASC);
-
+                    drawable=getResources().getDrawable(R.mipmap.arrow_order_up);
                 }else{
                     mAdapter.setSortBy(I.SORT_BY_PRICE_DESC);
+                    drawable=getResources().getDrawable(R.mipmap.arrow_order_down);
                 }
+                btnPrice.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,drawable,null);
                 PriceAsc=!PriceAsc;
                 break;
             case R.id.btn_Time:
                 if(AddTimeAsc){
                     mAdapter.setSortBy(I.SORT_BY_ADDTIME_ASC);
+                    drawable=getResources().getDrawable(R.mipmap.arrow_order_up);
                 }else{
                     mAdapter.setSortBy(I.SORT_BY_ADDTIME_DESC);
+                    drawable=getResources().getDrawable(R.mipmap.arrow_order_down);
                 }
                 AddTimeAsc=!AddTimeAsc;
+                btnTime.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,drawable,null);
                 break;
             case R.id.backAuto:
                 MFGT.finish(this);
                 break;
         }
+
     }
 }
         
