@@ -20,6 +20,7 @@ import butterknife.OnClick;
 import ucai.cn.fulicenter.I;
 import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.adapter.GoodsAdapter;
+import ucai.cn.fulicenter.bean.CategoryChildBean;
 import ucai.cn.fulicenter.bean.NewGoodsBean;
 import ucai.cn.fulicenter.utils.ConvertUtils;
 import ucai.cn.fulicenter.utils.MFGT;
@@ -52,6 +53,8 @@ public class CategoryChildActivity extends AppCompatActivity {
     RecyclerView rvNewGoods;
     @Bind(R.id.Srl)
     SwipeRefreshLayout Srl;
+    ArrayList<CategoryChildBean> list;
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +64,10 @@ public class CategoryChildActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         GoodsId = intent.getIntExtra("id", 0);
-        //btnCatChildFilter.setText(intent.getStringExtra("name"));
+        list= (ArrayList<CategoryChildBean>) intent.getSerializableExtra("list");
+        name = intent.getStringExtra("name");
+        btnCatChildFilter.setText(name);
+
         mContext = this;
         initView();
         initData();
@@ -118,6 +124,7 @@ public class CategoryChildActivity extends AppCompatActivity {
 
     private void initData() {
         downloadGoodsDetails(I.ACTION_DOWNLOAD, GoodsId);
+        btnCatChildFilter.setOnCatFilterClickListener(name,list);
     }
 
     private void downloadGoodsDetails(final int action, int goodsId) {
