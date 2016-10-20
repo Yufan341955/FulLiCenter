@@ -19,7 +19,7 @@ import ucai.cn.fulicenter.utils.ImageLoader;
 /**
  * Created by Administrator on 2016/10/20.
  */
-public class categoryAdapter extends BaseExpandableListAdapter {
+public class CategoryAdapter extends BaseExpandableListAdapter {
     Context mContext;
     ArrayList<CategoryGroupBean> mGroupList;
     ArrayList<ArrayList<CategoryChildBean>> mChildList;
@@ -27,7 +27,7 @@ public class categoryAdapter extends BaseExpandableListAdapter {
 
 
 
-    public categoryAdapter(Context mContext, ArrayList<CategoryGroupBean> mGroupList,
+    public CategoryAdapter(Context mContext, ArrayList<CategoryGroupBean> mGroupList,
                            ArrayList<ArrayList<CategoryChildBean>> mChildList) {
         this.mContext = mContext;
         this.mGroupList = new ArrayList<CategoryGroupBean>();
@@ -112,6 +112,12 @@ public class categoryAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
+    }
+
+    public void initData(ArrayList<CategoryGroupBean> mGroupList, ArrayList<ArrayList<CategoryChildBean>> mChildList) {
+        this.mGroupList.addAll(mGroupList);
+        this.mChildList.addAll(mChildList);
+        notifyDataSetChanged();
     }
 
     class ChildViewHolder {

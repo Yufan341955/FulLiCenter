@@ -5,6 +5,8 @@
     android:layout_height="match_parent">
     <ExpandableListView
         android:id="@+id/elv"
+        android:background="@color/list_background"
+        android:dividerHeight="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

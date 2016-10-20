@@ -3,21 +3,21 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
     android:gravity="center_vertical"
-
+   android:layout_marginTop="5dp"
     >
    <ImageView
        android:id="@+id/ivChild"
-       android:layout_width="60dp"
-       android:layout_height="60dp"
-       android:layout_marginLeft="40dp"/>
+       android:layout_width="30dp"
+       android:layout_height="40dp"
+       android:layout_marginLeft="80dp"
+       android:scaleType="fitXY"/>
     <TextView
         android:id="@+id/tv_Category_Goods_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="#000"
-        android:layout_marginLeft="15dp"
+        android:textSize="12sp"
+        android:textColor="@color/black2"
+        android:layout_marginLeft="25dp"
         android:text="面膜"/>
 </LinearLayout>

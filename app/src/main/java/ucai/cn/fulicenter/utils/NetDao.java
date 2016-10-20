@@ -51,9 +51,10 @@ public class NetDao {
                   .targetClass(CategoryGroupBean[].class)
                   .execute(listener);
     }
-    public static void downloadCategoryChild(Context context, OkHttpUtils.OnCompleteListener<CategoryChildBean[]> listener){
+    public static void downloadCategoryChild(Context context,int parentId, OkHttpUtils.OnCompleteListener<CategoryChildBean[]> listener){
         OkHttpUtils utils=new OkHttpUtils(context);
         utils.setRequestUrl(I.REQUEST_FIND_CATEGORY_CHILDREN)
+                .addParam(I.CategoryChild.PARENT_ID,parentId+"")
                 .targetClass(CategoryChildBean[].class)
                 .execute(listener);
     }

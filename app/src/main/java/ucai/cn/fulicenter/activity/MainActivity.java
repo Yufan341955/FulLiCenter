@@ -14,6 +14,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.fragment.BoutiqoeFragment;
+import ucai.cn.fulicenter.fragment.CategoryFragment;
 import ucai.cn.fulicenter.fragment.NewGoodsFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
     int index;
     RadioButton[] rbs;
     Fragment[] mFragments;
-    NewGoodsFragment mNewGoodsFragment;
-    BoutiqoeFragment mboutiqoeFragment;
+
+
 
 
     @Override
@@ -53,10 +54,13 @@ public class MainActivity extends AppCompatActivity {
         rbs[2]=rbtnCategory;
         rbs[3]=rbtnCart;
         rbs[4]=rbtnProsen;
-        mNewGoodsFragment=new NewGoodsFragment();
-        mboutiqoeFragment=new BoutiqoeFragment();
+        NewGoodsFragment mNewGoodsFragment=new NewGoodsFragment();
+        BoutiqoeFragment mboutiqoeFragment=new BoutiqoeFragment();
+        CategoryFragment mCategoryFragment=new CategoryFragment();
+
         mFragments[0]=mNewGoodsFragment;
         mFragments[1]=mboutiqoeFragment;
+        mFragments[2]=mCategoryFragment;
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction= manager.beginTransaction();
         transaction.add(R.id.frame,mFragments[0]);
