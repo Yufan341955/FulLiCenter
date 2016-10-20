@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,6 +29,18 @@ import ucai.cn.fulicenter.views.CatChildFilterButton;
 public class CategoryChildActivity extends AppCompatActivity {
 
 
+    boolean PriceAsc = false;
+    boolean AddTimeAsc = false;
+    int GoodsId;
+    int PageId = 1;
+    ArrayList<NewGoodsBean> mList;
+    CategoryChildActivity mContext;
+    GoodsAdapter mAdapter;
+    GridLayoutManager mManager;
+    @Bind(R.id.backAuto)
+    LinearLayout backAuto;
+    @Bind(R.id.btnCatChildFilter)
+    CatChildFilterButton btnCatChildFilter;
     @Bind(R.id.btn_Price)
     Button btnPrice;
     @Bind(R.id.btn_Time)
@@ -38,23 +51,16 @@ public class CategoryChildActivity extends AppCompatActivity {
     RecyclerView rvNewGoods;
     @Bind(R.id.Srl)
     SwipeRefreshLayout Srl;
-    @Bind(R.id.btnCatChildFilter)
-    CatChildFilterButton btnCatChildFilter;
-    int GoodsId;
-    int PageId = 1;
-    ArrayList<NewGoodsBean> mList;
-    CategoryChildActivity mContext;
-    GoodsAdapter mAdapter;
-    GridLayoutManager mManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_child);
         ButterKnife.bind(this);
+
         Intent intent = getIntent();
         GoodsId = intent.getIntExtra("id", 0);
-        btnCatChildFilter.setText(intent.getStringExtra("name"));
+        //btnCatChildFilter.setText(intent.getStringExtra("name"));
         mContext = this;
         initView();
         initData();
@@ -164,9 +170,30 @@ public class CategoryChildActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.backAuto)
-    public void onClick() {
-        MFGT.finish(this);
+    @OnClick({R.id.backAuto, R.id.btn_Price, R.id.btn_Time})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_Price:
+                if(PriceAsc){
+                    mAdapter.setSortBy(I.SORT_BY_PRICE_ASC);
+
+                }else{
+                    mAdapter.setSortBy(I.SORT_BY_PRICE_DESC);
+                }
+                PriceAsc=!PriceAsc;
+                break;
+            case R.id.btn_Time:
+                if(AddTimeAsc){
+                    mAdapter.setSortBy(I.SORT_BY_ADDTIME_ASC);
+                }else{
+                    mAdapter.setSortBy(I.SORT_BY_ADDTIME_DESC);
+                }
+                AddTimeAsc=!AddTimeAsc;
+                break;
+            case R.id.backAuto:
+                MFGT.finish(this);
+                break;
+        }
     }
 }
         

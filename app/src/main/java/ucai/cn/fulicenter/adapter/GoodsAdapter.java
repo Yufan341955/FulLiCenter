@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import ucai.cn.fulicenter.I;
 import ucai.cn.fulicenter.R;
@@ -27,6 +29,14 @@ public class GoodsAdapter extends RecyclerView.Adapter{
     ArrayList<NewGoodsBean> mGooodsList;
     RecyclerView parent;
     boolean isMore;
+    int SortBy=I.SORT_BY_ADDTIME_ASC;
+
+    public void setSortBy(int sortBy) {
+        SortBy = sortBy;
+        sortBy();
+        notifyDataSetChanged();
+    }
+
     public GoodsAdapter(Context mContext, ArrayList<NewGoodsBean> mGooodsList) {
         this.mContext = mContext;
         this.mGooodsList = mGooodsList;
@@ -130,6 +140,36 @@ public class GoodsAdapter extends RecyclerView.Adapter{
                 }
             });
         }
+    }
+    private void sortBy(){
+        Collections.sort(mGooodsList, new Comparator<NewGoodsBean>() {
+            @Override
+            public int compare(NewGoodsBean left, NewGoodsBean right) {
+                int result=0;
+                switch (SortBy){
+                    case I.SORT_BY_ADDTIME_ASC:
+                        result= (int) (left.getAddTime()-right.getAddTime());
+                        break;
+                    case I.SORT_BY_ADDTIME_DESC:
+                        result= (int) (right.getAddTime()-left.getAddTime());
+                    break;
+                    case I.SORT_BY_PRICE_ASC:
+                        result=getPrice(left.getCurrencyPrice())-getPrice(right.getCurrencyPrice());
+                    break;
+                    case I.SORT_BY_PRICE_DESC:
+                        result= getPrice(right.getCurrencyPrice())-getPrice(left.getCurrencyPrice());
+                    break;
+
+                }
+                return result;
+            }
+        });
+    }
+
+    private int getPrice(String price) {
+       String  p=price.substring(price.indexOf("￥")+1);
+        L.e("Price="+p);
+        return Integer.valueOf(p);
     }
 
 }
