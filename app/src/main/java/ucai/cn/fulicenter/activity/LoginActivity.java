@@ -1,5 +1,6 @@
 package ucai.cn.fulicenter.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +12,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ucai.cn.fulicenter.R;
+import ucai.cn.fulicenter.utils.CommonUtils;
+import ucai.cn.fulicenter.utils.L;
 import ucai.cn.fulicenter.utils.MFGT;
 
 public class LoginActivity extends AppCompatActivity {
@@ -26,11 +29,13 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.btn_Register)
     Button mbtnRegister;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
     }
 
     @OnClick({R.id.backAuto, R.id.btn_Login, R.id.btn_Register})
@@ -40,10 +45,43 @@ public class LoginActivity extends AppCompatActivity {
                 MFGT.finish(this);
                 break;
             case R.id.btn_Login:
+                String username=metUser.getText().toString().trim();
+                String password=metPassword.getText().toString().trim();
+                if(username.isEmpty()){
+                    CommonUtils.showLongToast(R.string.user_name_connot_be_empty);
+                    metUser.requestFocus();
+                    return;
+                }else if(password.isEmpty()){
+                    CommonUtils.showLongToast(R.string.password_connot_be_empty);
+                    metPassword.requestFocus();
+                    return;
+                }else {
+                    login(username,password);
+                }
                 break;
             case R.id.btn_Register:
-                MFGT.startActivity(this,RegisterActivity.class);
+                Intent intent=new Intent(this,RegisterActivity.class);
+                startActivityForResult(intent,3);
                 break;
+        }
+    }
+
+    private void login(String username, String password) {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode!=2){
+            return;
+        }
+        switch (requestCode){
+            case 3:
+                String UserName=data.getStringExtra("username");
+               metUser.setText(UserName);
+                break;
+
         }
     }
 }

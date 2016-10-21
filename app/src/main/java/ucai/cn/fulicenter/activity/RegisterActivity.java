@@ -1,5 +1,6 @@
 package ucai.cn.fulicenter.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.bean.Result;
+import ucai.cn.fulicenter.utils.CommonUtils;
 import ucai.cn.fulicenter.utils.MFGT;
 import ucai.cn.fulicenter.utils.NetDao;
 import ucai.cn.fulicenter.utils.OkHttpUtils;
@@ -56,8 +58,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "用户名不能为空", Toast.LENGTH_SHORT).show();
                     etUser.requestFocus();
                     return;
-                } else if (!UserName.matches("[a-zA-Z]\\w{5,15}")) {
-                    Toast.makeText(RegisterActivity.this, "用户名无效,以字母开头", Toast.LENGTH_SHORT).show();
+                } else if (!UserName.matches("[a-zA-Z]\\w{4,15}")) {
+                    Toast.makeText(RegisterActivity.this, "用户名无效,以字母开头,长度为5—16", Toast.LENGTH_SHORT).show();
                     etUser.requestFocus();
                     return;
                 } else if (Nick.isEmpty()) {
@@ -88,12 +90,24 @@ public class RegisterActivity extends AppCompatActivity {
         NetDao.register(this, userName, nick, password, new OkHttpUtils.OnCompleteListener<Result>() {
             @Override
             public void onSuccess(Result result) {
-
+             if(result==null){
+                 CommonUtils.showLongToast(R.string.register_fail_exists);
+             }else{
+                 if(result.isRetMsg()){
+                     CommonUtils.showLongToast(R.string.register_success);
+                     Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
+                     intent.putExtra("username",UserName);
+                     setResult(2,intent);
+                     finish();
+                 }else {
+                     CommonUtils.showLongToast(R.string.register_fail_exists);
+                 }
+             }
             }
 
             @Override
             public void onError(String error) {
-
+            CommonUtils.showLongToast(R.string.register_fail);
             }
         });
     }
@@ -102,4 +116,5 @@ public class RegisterActivity extends AppCompatActivity {
     public void onClick() {
         MFGT.finish(this);
     }
+
 }
