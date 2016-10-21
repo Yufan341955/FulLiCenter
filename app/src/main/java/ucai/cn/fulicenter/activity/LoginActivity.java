@@ -8,13 +8,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ucai.cn.fulicenter.R;
+import ucai.cn.fulicenter.bean.Result;
+import ucai.cn.fulicenter.bean.UserAvatar;
 import ucai.cn.fulicenter.utils.CommonUtils;
+import ucai.cn.fulicenter.utils.ConvertUtils;
 import ucai.cn.fulicenter.utils.L;
 import ucai.cn.fulicenter.utils.MFGT;
+import ucai.cn.fulicenter.utils.NetDao;
+import ucai.cn.fulicenter.utils.OkHttpUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -67,7 +74,29 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(String username, String password) {
+        NetDao.login(this, username, password, new OkHttpUtils.OnCompleteListener<Result>() {
+            @Override
+            public void onSuccess(Result result) {
+                if(result==null){
+                    CommonUtils.showLongToast("登录失败");
+                   return;
+                }
+                if(result.isRetMsg()){
+                    String json=result.getRetData().toString();
+                    Gson gson=new Gson();
+                    UserAvatar user=gson.fromJson(json,UserAvatar.class);
+                    CommonUtils.showLongToast("登录成功");
+                    L.e("user="+user.toString());
+                }else {
+                    CommonUtils.showLongToast("登录失败");
+                }
+            }
 
+            @Override
+            public void onError(String error) {
+
+            }
+        });
     }
 
     @Override

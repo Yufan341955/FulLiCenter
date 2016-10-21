@@ -70,6 +70,14 @@ public class NetDao {
                 .execute(listener);
 
     }
+    public static void login(Context context, String username, String password, OkHttpUtils.OnCompleteListener<Result> listener){
+        OkHttpUtils<Result> utils=new OkHttpUtils<Result>(context);
+        utils.setRequestUrl(I.REQUEST_LOGIN)
+                .addParam(I.User.USER_NAME,username)
+                .addParam(I.User.PASSWORD,password)
+                .targetClass(Result.class)
+                .execute(listener);
 
+    }
 
 }
