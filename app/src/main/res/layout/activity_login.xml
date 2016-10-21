@@ -12,7 +12,8 @@
         <LinearLayout
             android:id="@+id/backAuto"
             android:layout_width="35dp"
-            android:layout_height="35dp">
+            android:layout_height="35dp"
+            android:layout_centerVertical="true">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="35dp"
@@ -50,7 +51,9 @@
             android:layout_height="45dp"
             android:background="#fff"
             android:drawableRight="@drawable/icon_pwd"
-            android:hint="密码"/>
+            android:hint="密码"
+            android:password="true"
+            />
 
     </LinearLayout>
     <Button
