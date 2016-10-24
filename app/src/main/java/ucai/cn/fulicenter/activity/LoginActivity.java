@@ -13,9 +13,11 @@ import com.google.gson.Gson;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import ucai.cn.fulicenter.I;
 import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.bean.Result;
 import ucai.cn.fulicenter.bean.UserAvatar;
+import ucai.cn.fulicenter.dao.UserDao;
 import ucai.cn.fulicenter.utils.CommonUtils;
 import ucai.cn.fulicenter.utils.ConvertUtils;
 import ucai.cn.fulicenter.utils.L;
@@ -80,15 +82,27 @@ public class LoginActivity extends AppCompatActivity {
                 if(result==null){
                     CommonUtils.showLongToast("登录失败");
                    return;
-                }
-                if(result.isRetMsg()){
-                    String json=result.getRetData().toString();
-                    Gson gson=new Gson();
-                    UserAvatar user=gson.fromJson(json,UserAvatar.class);
-                    CommonUtils.showLongToast("登录成功");
-                    L.e("user="+user.toString());
                 }else {
-                    CommonUtils.showLongToast("登录失败");
+                    if (result.isRetMsg()) {
+                        String json = result.getRetData().toString();
+                        Gson gson = new Gson();
+                        UserAvatar user = gson.fromJson(json, UserAvatar.class);
+                        UserDao dao=new UserDao(LoginActivity.this);
+                        boolean b = dao.savaUser(user);
+                        L.e("boolean="+b+"");
+                        CommonUtils.showLongToast("登录成功");
+                        L.e("user=" + user.toString());
+                        MFGT.finish(LoginActivity.this);
+                    } else {
+                         if(result.getRetCode()== I.MSG_LOGIN_UNKNOW_USER){
+                             CommonUtils.showLongToast("不存在该用户名");
+                         }else if(result.getRetCode()==I.MSG_LOGIN_ERROR_PASSWORD){
+                             CommonUtils.showLongToast("密码错误");
+                             metPassword.requestFocus();
+                         }else {
+                             CommonUtils.showLongToast("登录失败");
+                         }
+                    }
                 }
             }
 

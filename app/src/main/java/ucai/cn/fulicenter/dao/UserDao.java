@@ -4,6 +4,7 @@ package ucai.cn.fulicenter.dao;
 import android.content.Context;
 
 import ucai.cn.fulicenter.bean.UserAvatar;
+import ucai.cn.fulicenter.utils.L;
 
 public class UserDao {
      static final String USER_TABLE_NAME="t_fulicenter_user";
@@ -18,9 +19,12 @@ public class UserDao {
     public UserDao(Context context){
          DBManager.getInstance().onInit(context);
     }
+
     public boolean savaUser(UserAvatar user){
+        L.e("DBUserDao");
         return DBManager.getInstance().savaUser(user);
     }
+
     public  UserAvatar getUser(String username){
         return DBManager.getInstance().getUser(username);
     }

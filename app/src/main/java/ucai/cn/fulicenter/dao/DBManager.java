@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.ContextCompat;
 
 import ucai.cn.fulicenter.bean.UserAvatar;
+import ucai.cn.fulicenter.utils.L;
 
 /**
  * Created by Administrator on 2016/10/24.
@@ -42,6 +43,7 @@ public class DBManager {
         values.put(UserDao.USER_AVATAR_PATH,user.getMavatarPath());
         values.put(UserDao.USER_AVATAR_SUFFIX,user.getMavatarSuffix());
         values.put(UserDao.USER_AVATAR_LASTUPDATE_TIME,user.getMavatarLastUpdateTime()+"");
+        L.e("DBManager");
         if(db.isOpen()){
             return  db.replace(UserDao.USER_TABLE_NAME,null,values)!=-1;
         }
@@ -75,8 +77,19 @@ public class DBManager {
     }
 
     public boolean updateUser(UserAvatar user) {
+        int result=-1;
         SQLiteDatabase db = mHelper.getWritableDatabase();
-
-        return false;
+        ContentValues values=new ContentValues();
+        values.put(UserDao.USER_NAME,user.getMuserName());
+        values.put(UserDao.USER_NICK,user.getMuserNick());
+        values.put(UserDao.USER_AVATAR_ID,user.getMavatarId());
+        values.put(UserDao.USER_AVATAR_TYPE,user.getMavatarType());
+        values.put(UserDao.USER_AVATAR_PATH,user.getMavatarPath());
+        values.put(UserDao.USER_AVATAR_SUFFIX,user.getMavatarSuffix());
+        values.put(UserDao.USER_AVATAR_LASTUPDATE_TIME,user.getMavatarLastUpdateTime()+"");
+        if(db.isOpen()){
+            result = db.update(UserDao.USER_TABLE_NAME,values,UserDao.USER_NAME+"=?",new String[]{user.getMuserName()});
+        }
+        return result>0;
     }
 }

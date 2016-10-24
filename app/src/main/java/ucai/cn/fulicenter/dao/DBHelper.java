@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import ucai.cn.fulicenter.I;
+import ucai.cn.fulicenter.utils.L;
 
 /**
  * Created by Administrator on 2016/10/24.
@@ -22,22 +23,25 @@ public class DBHelper extends SQLiteOpenHelper{
             +UserDao.USER_AVATAR_LASTUPDATE_TIME+" text);";
 
     private static DBHelper mHelper;
+
     public static DBHelper onInit(Context context){
         if(mHelper==null){
-            mHelper=new DBHelper(context,DB_NAME,null,1);
+            mHelper=new DBHelper(context.getApplicationContext());
+            L.e("onInit");
         }
         return mHelper;
     }
 
 
-    public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public DBHelper(Context context) {
+        super(context, DB_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        L.e("DBCREATE1");
         db.execSQL(FULICENTER_CREATE);
-
+        L.e("DBCREATE2");
     }
 
     @Override
