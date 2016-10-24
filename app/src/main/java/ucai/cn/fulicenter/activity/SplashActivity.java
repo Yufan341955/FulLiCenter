@@ -31,7 +31,6 @@ public class SplashActivity extends AppCompatActivity {
                 String username=SharePrefrenceUtils.getInstance(SplashActivity.this).getUser();
                 if(user==null&&username!=null) {
                     UserDao dao = new UserDao(SplashActivity.this);
-
                     user = dao.getUser(username);
                     L.e("User="+user.toString());
                     if(user!=null){

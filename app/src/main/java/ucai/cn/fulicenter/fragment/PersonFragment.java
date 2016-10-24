@@ -69,6 +69,7 @@ public class PersonFragment extends BaseFragment {
         }else {
          mPersionUserNick.setText(user.getMuserNick());
             ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user),mContext,mPersionUserAvatar);
+
         }
     }
 

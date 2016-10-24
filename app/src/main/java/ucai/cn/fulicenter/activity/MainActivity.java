@@ -1,6 +1,7 @@
 package ucai.cn.fulicenter.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -88,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.rbtn_cart:
                 index=3;
-
                 break;
             case R.id.rbtn_prosen:
                 if(FuLiCenterApplication.getUser()==null){
@@ -127,5 +127,12 @@ public class MainActivity extends AppCompatActivity {
             index=4;
         }
         changeFragment(index);
+        singleChecked(index);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 }

@@ -64,7 +64,7 @@ public class DBManager {
             int type = cursor.getInt(cursor.getColumnIndex(UserDao.USER_AVATAR_TYPE));
             String path = cursor.getString(cursor.getColumnIndex(UserDao.USER_AVATAR_PATH));
             String suffix = cursor.getString(cursor.getColumnIndex(UserDao.USER_AVATAR_SUFFIX));
-            long lastime=Integer.valueOf(cursor.getString(cursor.getColumnIndex(UserDao.USER_AVATAR_LASTUPDATE_TIME)));
+            long lastime=Long.valueOf(cursor.getString(cursor.getColumnIndex(UserDao.USER_AVATAR_LASTUPDATE_TIME)));
             user.setMavatarId(id);
             user.setMuserName(name);
             user.setMuserNick(nick);
