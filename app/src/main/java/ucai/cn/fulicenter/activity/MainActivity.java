@@ -17,6 +17,7 @@ import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.fragment.BoutiqoeFragment;
 import ucai.cn.fulicenter.fragment.CategoryFragment;
 import ucai.cn.fulicenter.fragment.NewGoodsFragment;
+import ucai.cn.fulicenter.fragment.PersonFragment;
 import ucai.cn.fulicenter.utils.MFGT;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,10 +60,11 @@ public class MainActivity extends AppCompatActivity {
         NewGoodsFragment mNewGoodsFragment=new NewGoodsFragment();
         BoutiqoeFragment mboutiqoeFragment=new BoutiqoeFragment();
         CategoryFragment mCategoryFragment=new CategoryFragment();
-
+        PersonFragment mPersonFragment=new PersonFragment();
         mFragments[0]=mNewGoodsFragment;
         mFragments[1]=mboutiqoeFragment;
         mFragments[2]=mCategoryFragment;
+        mFragments[4]=mPersonFragment;
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction= manager.beginTransaction();
         transaction.add(R.id.frame,mFragments[0]);
