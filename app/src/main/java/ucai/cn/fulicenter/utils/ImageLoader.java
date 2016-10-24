@@ -20,6 +20,7 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import ucai.cn.fulicenter.bean.UserAvatar;
 
 /**
  * Created by yao on 2016/5/18.
@@ -356,6 +357,22 @@ public class ImageLoader {
                 .defaultPicture(R.drawable.nopic)
                 .imageView(imageView)
                 .setDragging(isDragging)
+                .showImage(context);
+    }
+    public static String getAvatarUrl(UserAvatar user){
+        if(user!=null){
+            String url=I.DOWNLOAD_AVATAR_URL+I.NAME_OR_HXID+"="+user.getMuserName()
+                    +I.AND+I.AVATAR_TYPE+"="+user.getMavatarType()+I.AND+I.AVATAR_SUFFIX_JPG
+                    +"="+user.getMavatarSuffix()+I.AND+"width=200&height=200";
+            L.e("AvatarUrl="+url);
+            return url;
+        }
+        return null;
+    }
+    public static void setAvatar(String url,Context context,ImageView imageView){
+        ImageLoader.build(url)
+                .defaultPicture(R.drawable.contactlogo)
+                .imageView(imageView)
                 .showImage(context);
     }
 }

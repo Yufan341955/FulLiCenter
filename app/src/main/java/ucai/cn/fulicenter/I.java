@@ -415,5 +415,7 @@ public interface I {
     /** 下载精选首页图像的接口*/
     String DOWNLOAD_IMG_URL= I.SERVER_ROOT+
             REQUEST_DOWNLOAD_IMAGE+I.QUESTION+ IMAGE_URL+"=";
+    String DOWNLOAD_AVATAR_URL=I.SERVER_ROOT+
+            REQUEST_DOWNLOAD_AVATAR+I.QUESTION;
 
 }

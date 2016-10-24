@@ -120,5 +120,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(FuLiCenterApplication.getUser()!=null){
+            index=4;
+        }
+        changeFragment(index);
+    }
 }

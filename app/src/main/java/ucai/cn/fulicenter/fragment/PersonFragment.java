@@ -15,6 +15,7 @@ import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.activity.LoginActivity;
 import ucai.cn.fulicenter.activity.MainActivity;
 import ucai.cn.fulicenter.bean.UserAvatar;
+import ucai.cn.fulicenter.utils.ImageLoader;
 import ucai.cn.fulicenter.utils.MFGT;
 
 /**
@@ -67,7 +68,7 @@ public class PersonFragment extends BaseFragment {
             MFGT.startActivity(mContext, LoginActivity.class);
         }else {
          mPersionUserNick.setText(user.getMuserNick());
-
+            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user),mContext,mPersionUserAvatar);
         }
     }
 
