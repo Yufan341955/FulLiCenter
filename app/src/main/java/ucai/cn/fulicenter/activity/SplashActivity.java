@@ -6,7 +6,11 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import ucai.cn.fulicenter.FuLiCenterApplication;
 import ucai.cn.fulicenter.R;
+import ucai.cn.fulicenter.bean.UserAvatar;
+import ucai.cn.fulicenter.dao.SharePrefrenceUtils;
+import ucai.cn.fulicenter.dao.UserDao;
 import ucai.cn.fulicenter.utils.MFGT;
 
 public class SplashActivity extends AppCompatActivity {
@@ -22,8 +26,19 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                MFGT.gotoMainActivity(SplashActivity.this);
-                finish();
+                UserAvatar user=FuLiCenterApplication.getUser();
+                String username=SharePrefrenceUtils.getInstance(SplashActivity.this).getUser();
+                if(user==null&&username!=null) {
+                    UserDao dao = new UserDao(SplashActivity.this);
+                    user = dao.getUser(username);
+                    if(user!=null){
+                        FuLiCenterApplication.setUser(user);
+                    }
+                }
+                    MFGT.gotoMainActivity(SplashActivity.this);
+                    finish();
+
+
             }
         },SPLASH_TIME);
 //

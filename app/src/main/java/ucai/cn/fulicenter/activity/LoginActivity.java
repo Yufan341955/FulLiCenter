@@ -13,10 +13,12 @@ import com.google.gson.Gson;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import ucai.cn.fulicenter.FuLiCenterApplication;
 import ucai.cn.fulicenter.I;
 import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.bean.Result;
 import ucai.cn.fulicenter.bean.UserAvatar;
+import ucai.cn.fulicenter.dao.SharePrefrenceUtils;
 import ucai.cn.fulicenter.dao.UserDao;
 import ucai.cn.fulicenter.utils.CommonUtils;
 import ucai.cn.fulicenter.utils.ConvertUtils;
@@ -75,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void login(String username, String password) {
+    private void login(final String username, String password) {
         NetDao.login(this, username, password, new OkHttpUtils.OnCompleteListener<Result>() {
             @Override
             public void onSuccess(Result result) {
@@ -89,10 +91,15 @@ public class LoginActivity extends AppCompatActivity {
                         UserAvatar user = gson.fromJson(json, UserAvatar.class);
                         UserDao dao=new UserDao(LoginActivity.this);
                         boolean b = dao.savaUser(user);
-                        L.e("boolean="+b+"");
-                        CommonUtils.showLongToast("登录成功");
-                        L.e("user=" + user.toString());
-                        MFGT.finish(LoginActivity.this);
+                        if(b){
+                            SharePrefrenceUtils.getInstance(LoginActivity.this).saveUser(user.getMuserName());
+                            FuLiCenterApplication.setUser(user);
+                            CommonUtils.showLongToast("登录成功");
+                            MFGT.finish(LoginActivity.this);
+                        }else {
+                            CommonUtils.showLongToast("数据库操作异常");
+                        }
+
                     } else {
                          if(result.getRetCode()== I.MSG_LOGIN_UNKNOW_USER){
                              CommonUtils.showLongToast("不存在该用户名");
