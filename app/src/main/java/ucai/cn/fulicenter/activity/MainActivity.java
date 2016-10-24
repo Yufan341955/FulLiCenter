@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import ucai.cn.fulicenter.FuLiCenterApplication;
 import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.fragment.BoutiqoeFragment;
 import ucai.cn.fulicenter.fragment.CategoryFragment;
@@ -73,31 +74,30 @@ public class MainActivity extends AppCompatActivity {
         switch (v.getId()) {
             case R.id.rbtn_newGoods:
                 index=0;
-                changeFragment(index);
+
                 break;
             case R.id.rbtn_boutique:
                 index=1;
-                changeFragment(index);
+
                 break;
             case R.id.rbtn_category:
                 index=2;
-                changeFragment(index);
+
                 break;
             case R.id.rbtn_cart:
                 index=3;
-                changeFragment(index);
+
                 break;
             case R.id.rbtn_prosen:
-                index=4;
-                if(mFragments[index]==null){
+                if(FuLiCenterApplication.getUser()==null){
                     MFGT.startActivity(this,LoginActivity.class);
                 }else {
-                    changeFragment(index);
+                    index=4;
                 }
                 break;
         }
         singleChecked(index);
-
+        changeFragment(index);
     }
 
     private void changeFragment(int index) {

@@ -11,6 +11,7 @@ import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.bean.UserAvatar;
 import ucai.cn.fulicenter.dao.SharePrefrenceUtils;
 import ucai.cn.fulicenter.dao.UserDao;
+import ucai.cn.fulicenter.utils.L;
 import ucai.cn.fulicenter.utils.MFGT;
 
 public class SplashActivity extends AppCompatActivity {
@@ -30,7 +31,9 @@ public class SplashActivity extends AppCompatActivity {
                 String username=SharePrefrenceUtils.getInstance(SplashActivity.this).getUser();
                 if(user==null&&username!=null) {
                     UserDao dao = new UserDao(SplashActivity.this);
+
                     user = dao.getUser(username);
+                    L.e("User="+user.toString());
                     if(user!=null){
                         FuLiCenterApplication.setUser(user);
                     }
