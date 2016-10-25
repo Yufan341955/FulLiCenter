@@ -171,15 +171,18 @@ public class OnSetAvatarListener implements View.OnClickListener {
         switch (requestCode) {
             case REQUEST_CHOOSE_PHOTO:
                 if (data != null) {
+                    L.e("REQUEST_CHOOSE_PHOTO.Data!=null");
                     startCropPhotoActivity(data.getData(), 200, 200,REQUEST_CROP_PHOTO);
                 }
                 break;
             case REQUEST_TAKE_PICTURE:
                 if (data != null) {
+                    L.e("REQUEST_TAKE_PICTURE.Data!=null");
                     startCropPhotoActivity(data.getData(), 200, 200,REQUEST_CROP_PHOTO);
                 }
                 break;
             case REQUEST_CROP_PHOTO:
+                L.e("REQUEST_CROP_PHOTO");
                 saveCropAndShowAvatar(ivAvatar, data);
                 closePopuAvatar();
                 break;
@@ -194,11 +197,13 @@ public class OnSetAvatarListener implements View.OnClickListener {
     private void saveCropAndShowAvatar(ImageView ivAvatar, Intent data) {
         Bundle extras = data.getExtras();
         Bitmap avatar = extras.getParcelable("data");
+        L.e("Bitmap"+avatar.toString());
         if (avatar == null) {
             return;
         }
         ivAvatar.setImageBitmap(avatar);
         File file = FileUtils.getAvatarPath(mActivity,mAvatarType, mUserName + ".jpg");
+        L.e("path="+file.getAbsolutePath());
         if(!file.getParentFile().exists()){
             Toast.makeText(mActivity, "照片保存失败,保存的路径不存在", Toast.LENGTH_LONG).show();
             return ;
@@ -248,6 +253,8 @@ public class OnSetAvatarListener implements View.OnClickListener {
      */
     private void startCropPhotoActivity(Uri uri, int outputX, int outputY, int requestCode) {
         Intent intent = new Intent("com.android.camera.action.CROP");
+
+        L.e("CropPhone"+uri.toString());
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("outputX", outputX);
         intent.putExtra("outputY", outputY);
