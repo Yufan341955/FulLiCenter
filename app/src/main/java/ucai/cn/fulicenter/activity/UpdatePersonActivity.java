@@ -17,6 +17,7 @@ import ucai.cn.fulicenter.dao.SharePrefrenceUtils;
 import ucai.cn.fulicenter.utils.CommonUtils;
 import ucai.cn.fulicenter.utils.ImageLoader;
 import ucai.cn.fulicenter.utils.MFGT;
+import ucai.cn.fulicenter.utils.OnSetAvatarListener;
 
 public class UpdatePersonActivity extends AppCompatActivity {
 
@@ -31,7 +32,7 @@ public class UpdatePersonActivity extends AppCompatActivity {
     @Bind(R.id.btn_exists)
     Button btnExists;
     UserAvatar user;
-
+   OnSetAvatarListener mOnSetAvatarListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,7 @@ public class UpdatePersonActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ivAvatar:
+
                 break;
             case R.id.UserName:
                 CommonUtils.showLongToast("用户名不可修改");

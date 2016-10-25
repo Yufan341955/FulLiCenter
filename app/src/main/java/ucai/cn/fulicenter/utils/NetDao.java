@@ -2,6 +2,8 @@ package ucai.cn.fulicenter.utils;
 
 import android.content.Context;
 
+import java.io.File;
+
 import ucai.cn.fulicenter.I;
 import ucai.cn.fulicenter.bean.BoutiqueBean;
 import ucai.cn.fulicenter.bean.CategoryChildBean;
@@ -85,6 +87,17 @@ public class NetDao {
                 .addParam(I.User.USER_NAME,username)
                 .addParam(I.User.NICK,nick)
                 .targetClass(String.class)
+                .execute(listener);
+
+    }
+    public static void updateAvatar(Context context, String username, File file, OkHttpUtils.OnCompleteListener<Result> listener){
+        OkHttpUtils<Result> utils=new OkHttpUtils<Result>(context);
+        utils.setRequestUrl(I.REQUEST_UPDATE_AVATAR)
+                .addParam(I.NAME_OR_HXID,username)
+                .addParam(I.AVATAR_TYPE,"user_avatar")
+                .addFile2(file)
+                .post()
+                .targetClass(Result.class)
                 .execute(listener);
 
     }
