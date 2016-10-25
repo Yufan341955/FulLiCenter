@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
             changeFragment(index);
             singleChecked(index);
         }
-
     }
 
     @Override

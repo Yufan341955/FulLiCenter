@@ -50,7 +50,7 @@ public class PersonFragment extends BaseFragment {
     MainActivity mContext;
     @Bind(R.id.m_Persion_My_Member_Card)
     RelativeLayout mPersionMyMemberCard;
-
+    UserAvatar user;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class PersonFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        UserAvatar user = FuLiCenterApplication.getUser();
+        user = FuLiCenterApplication.getUser();
         if (user == null) {
             MFGT.startActivity(mContext, LoginActivity.class);
         } else {
@@ -101,5 +101,11 @@ public class PersonFragment extends BaseFragment {
                 MFGT.startActivity(mContext, UpdatePersonActivity.class);
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
     }
 }

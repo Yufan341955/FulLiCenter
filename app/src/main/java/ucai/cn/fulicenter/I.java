@@ -313,7 +313,7 @@ public interface I {
     int MSG_LOGIN_ERROR_PASSWORD=402;//账户密码错误
     int MSG_LOGIN_SUCCESS=403;//登陆成功
     int MSG_USER_SAME_NICK=404;//昵称未修改
-    int MSG_USER_UPDATE_NICK_SUCCESS=405;//昵称修改成功
+    int MSG_USER_UPDATE_NICK_SUCCESS=0;//昵称修改成功
     int MSG_USER_UPDATE_NICK_FAIL=406;//昵称修改失败
     int MSG_USER_SAME_PASSWORD=407;//昵称未修改
     int MSG_USER_UPDATE_PASSWORD_SUCCESS=408;//昵称修改成功
