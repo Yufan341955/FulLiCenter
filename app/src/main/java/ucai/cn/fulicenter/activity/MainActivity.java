@@ -92,7 +92,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.rbtn_prosen:
                 if(FuLiCenterApplication.getUser()==null){
-                    MFGT.startActivity(this,LoginActivity.class);
+                    Intent intent=new Intent(this,LoginActivity.class);
+                    startActivityForResult(intent,4);
+                    //MFGT.startActivity(this,LoginActivity.class);
                 }else {
                     index=4;
                 }
@@ -123,16 +125,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(FuLiCenterApplication.getUser()!=null){
-            index=4;
-        }
         changeFragment(index);
-        singleChecked(index);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        if(resultCode!=5){
+            return;
+        }
+        switch (requestCode){
+            case 4:
+                index=4;
+                //changeFragment(index);
+                singleChecked(index);
+            break;
+        }
     }
 }

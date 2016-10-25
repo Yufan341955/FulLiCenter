@@ -95,8 +95,11 @@ public class LoginActivity extends AppCompatActivity {
                             SharePrefrenceUtils.getInstance(LoginActivity.this).saveUser(user.getMuserName());
                             FuLiCenterApplication.setUser(user);
                             CommonUtils.showLongToast("登录成功");
-
-                            MFGT.finish(LoginActivity.this);
+                            Intent intent=new Intent(LoginActivity.this,LoginActivity.class);
+                            intent.putExtra("name",user.getMuserName());
+                            setResult(5,intent);
+                            finish();
+                           // MFGT.finish(LoginActivity.this);
                         }else {
                             CommonUtils.showLongToast("数据库操作异常");
                         }
