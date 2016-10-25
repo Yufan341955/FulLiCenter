@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction= manager.beginTransaction();
         transaction.replace(R.id.frame,mFragments[index]);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 
     public void singleChecked(int index) {
@@ -125,7 +125,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        changeFragment(index);
+        if(FuLiCenterApplication.getUser()==null){
+            changeFragment(0);
+            singleChecked(0);
+        }else {
+            changeFragment(index);
+            singleChecked(index);
+        }
+
     }
 
     @Override
@@ -137,8 +144,7 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode){
             case 4:
                 index=4;
-                //changeFragment(index);
-                singleChecked(index);
+
             break;
         }
     }

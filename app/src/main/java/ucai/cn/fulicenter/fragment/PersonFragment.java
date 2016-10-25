@@ -1,19 +1,23 @@
 package ucai.cn.fulicenter.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ucai.cn.fulicenter.FuLiCenterApplication;
 import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.activity.LoginActivity;
 import ucai.cn.fulicenter.activity.MainActivity;
+import ucai.cn.fulicenter.activity.UpdatePersonActivity;
 import ucai.cn.fulicenter.bean.UserAvatar;
 import ucai.cn.fulicenter.utils.ImageLoader;
 import ucai.cn.fulicenter.utils.MFGT;
@@ -44,12 +48,15 @@ public class PersonFragment extends BaseFragment {
     ImageView mPersionMyMemberCardIV;
 
     MainActivity mContext;
+    @Bind(R.id.m_Persion_My_Member_Card)
+    RelativeLayout mPersionMyMemberCard;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_person, container, false);
         ButterKnife.bind(this, layout);
-        mContext= (MainActivity) getContext();
+        mContext = (MainActivity) getContext();
 
         super.onCreateView(inflater, container, savedInstanceState);
 
@@ -63,12 +70,12 @@ public class PersonFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        UserAvatar user= FuLiCenterApplication.getUser();
-        if(user==null){
+        UserAvatar user = FuLiCenterApplication.getUser();
+        if (user == null) {
             MFGT.startActivity(mContext, LoginActivity.class);
-        }else {
-         mPersionUserNick.setText(user.getMuserNick());
-            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user),mContext,mPersionUserAvatar);
+        } else {
+            mPersionUserNick.setText(user.getMuserNick());
+            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mPersionUserAvatar);
 
         }
     }
@@ -82,5 +89,17 @@ public class PersonFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @OnClick({R.id.m_Persion_Setting, R.id.m_Persion_UserAvatar})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.m_Persion_Setting:
+                MFGT.startActivity(mContext, UpdatePersonActivity.class);
+                break;
+            case R.id.m_Persion_UserAvatar:
+                MFGT.startActivity(mContext, UpdatePersonActivity.class);
+                break;
+        }
     }
 }
