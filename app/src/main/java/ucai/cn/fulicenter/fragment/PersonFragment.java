@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -18,9 +20,13 @@ import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.activity.LoginActivity;
 import ucai.cn.fulicenter.activity.MainActivity;
 import ucai.cn.fulicenter.activity.UpdatePersonActivity;
+import ucai.cn.fulicenter.bean.Result;
 import ucai.cn.fulicenter.bean.UserAvatar;
 import ucai.cn.fulicenter.utils.ImageLoader;
 import ucai.cn.fulicenter.utils.MFGT;
+import ucai.cn.fulicenter.utils.NetDao;
+import ucai.cn.fulicenter.utils.OkHttpUtils;
+import ucai.cn.fulicenter.utils.ResultUtils;
 
 /**
  * Created by Administrator on 2016/10/24.
@@ -50,7 +56,7 @@ public class PersonFragment extends BaseFragment {
     MainActivity mContext;
     @Bind(R.id.m_Persion_My_Member_Card)
     RelativeLayout mPersionMyMemberCard;
-    UserAvatar user;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,14 +76,43 @@ public class PersonFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        user = FuLiCenterApplication.getUser();
+        UserAvatar user = FuLiCenterApplication.getUser();
         if (user == null) {
             MFGT.startActivity(mContext, LoginActivity.class);
         } else {
-            mPersionUserNick.setText(user.getMuserNick());
-            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mPersionUserAvatar);
+           downloadUserByUserName(user.getMuserName());
+            getCollectCount(user.getMuserName());
+//            mPersionUserNick.setText(user.getMuserNick());
+//            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mPersionUserAvatar);
 
         }
+    }
+
+    private void getCollectCount(String muserName) {
+
+    }
+
+    private void downloadUserByUserName(String muserName) {
+        NetDao.findUserByUserName(mContext, muserName, new OkHttpUtils.OnCompleteListener<Result>() {
+            @Override
+            public void onSuccess(Result result) {
+                if(result!=null) {
+                    if(result.isRetMsg()){
+                        String json=result.getRetData().toString();
+                        Gson gson=new Gson();
+                        UserAvatar user=gson.fromJson(json,UserAvatar.class);
+                        mPersionUserNick.setText(user.getMuserNick());
+                        ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mPersionUserAvatar);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
     }
 
     @Override

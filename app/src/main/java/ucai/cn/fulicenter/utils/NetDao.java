@@ -101,6 +101,21 @@ public class NetDao {
                 .execute(listener);
 
     }
+    public static void findUserByUserName(Context context, String username, OkHttpUtils.OnCompleteListener<Result> listener){
+        OkHttpUtils<Result> utils=new OkHttpUtils<Result>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_USER)
+                .addParam(I.User.USER_NAME,username)
+                .targetClass(Result.class)
+                .execute(listener);
+    }
+    public static void getCollectCount(Context context, String username, OkHttpUtils.OnCompleteListener<String> listener){
+        OkHttpUtils<String> utils=new OkHttpUtils<String>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
+                .addParam(I.User.USER_NAME,username)
+                .targetClass(String.class)
+                .execute(listener);
+
+    }
 
 
 }
