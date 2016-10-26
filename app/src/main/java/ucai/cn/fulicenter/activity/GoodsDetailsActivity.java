@@ -2,7 +2,9 @@ package ucai.cn.fulicenter.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,10 +12,13 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import ucai.cn.fulicenter.FuLiCenterApplication;
 import ucai.cn.fulicenter.I;
 import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.bean.AlbumsBean;
 import ucai.cn.fulicenter.bean.GoodsDetailsBean;
+import ucai.cn.fulicenter.bean.MessageBean;
+import ucai.cn.fulicenter.bean.UserAvatar;
 import ucai.cn.fulicenter.utils.L;
 import ucai.cn.fulicenter.utils.MFGT;
 import ucai.cn.fulicenter.utils.NetDao;
@@ -41,7 +46,13 @@ public class GoodsDetailsActivity extends AppCompatActivity {
     @Bind(R.id.wv_goods_brief)
     WebView wvGoodsBrief;
     int goodsId;
+    @Bind(R.id.collect_in)
+    ImageView collectIn;
+    @Bind(R.id.share)
+    ImageView share;
 
+    UserAvatar user;
+    boolean isCollect=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +63,7 @@ public class GoodsDetailsActivity extends AppCompatActivity {
         if (goodsId == 0) {
             finish();
         }
+        user= FuLiCenterApplication.getUser();
         initView();
         initData();
         setListener();
@@ -62,6 +74,34 @@ public class GoodsDetailsActivity extends AppCompatActivity {
     }
 
     private void initData() {
+        downloadGoodsDetails();
+        if(user!=null) {
+            isCollect(goodsId,user.getMuserName());
+        }
+       if(isCollect){
+           collectIn.setImageResource(R.mipmap.bg_collect_out);
+       }else{
+           collectIn.setImageResource(R.mipmap.bg_collect_in);
+       }
+    }
+
+    private void isCollect(int goodsId,String username) {
+        NetDao.isCollect(this, goodsId, username, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if(result!=null){
+                    isCollect=result.isSuccess();
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+    }
+
+    private void downloadGoodsDetails() {
         NetDao.downlodaGoodsDetails(this, goodsId, new OkHttpUtils.OnCompleteListener<GoodsDetailsBean>() {
             @Override
             public void onSuccess(GoodsDetailsBean result) {
@@ -123,5 +163,16 @@ public class GoodsDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         MFGT.finish(this);
+    }
+
+    @OnClick({R.id.collect_in, R.id.share})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.collect_in:
+
+                break;
+            case R.id.share:
+                break;
+        }
     }
 }

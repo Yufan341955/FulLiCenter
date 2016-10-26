@@ -137,6 +137,15 @@ public class NetDao {
                 .targetClass(MessageBean.class)
                 .execute(listener);
     }
+    public static void isCollect(Context context, int goodsId, String username, OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils=new OkHttpUtils<MessageBean>(context);
+        utils.setRequestUrl(I.REQUEST_IS_COLLECT)
+                .addParam(I.Goods.KEY_GOODS_ID,goodsId+"")
+                .addParam(I.USER_NAME,username)
+                .targetClass(MessageBean.class)
+                .execute(listener);
+
+    }
 
 
 }
