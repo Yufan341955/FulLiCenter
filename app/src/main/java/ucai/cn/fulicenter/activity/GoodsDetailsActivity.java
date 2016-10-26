@@ -19,6 +19,7 @@ import ucai.cn.fulicenter.bean.AlbumsBean;
 import ucai.cn.fulicenter.bean.GoodsDetailsBean;
 import ucai.cn.fulicenter.bean.MessageBean;
 import ucai.cn.fulicenter.bean.UserAvatar;
+import ucai.cn.fulicenter.utils.CommonUtils;
 import ucai.cn.fulicenter.utils.L;
 import ucai.cn.fulicenter.utils.MFGT;
 import ucai.cn.fulicenter.utils.NetDao;
@@ -78,11 +79,7 @@ public class GoodsDetailsActivity extends AppCompatActivity {
         if(user!=null) {
             isCollect(goodsId,user.getMuserName());
         }
-       if(isCollect){
-           collectIn.setImageResource(R.mipmap.bg_collect_out);
-       }else{
-           collectIn.setImageResource(R.mipmap.bg_collect_in);
-       }
+
     }
 
     private void isCollect(int goodsId,String username) {
@@ -91,6 +88,7 @@ public class GoodsDetailsActivity extends AppCompatActivity {
             public void onSuccess(MessageBean result) {
                 if(result!=null){
                     isCollect=result.isSuccess();
+                    setCollectImage();
                 }
             }
 
@@ -169,10 +167,65 @@ public class GoodsDetailsActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.collect_in:
-
+            if(user!=null){
+                if(isCollect){
+                    delteCollect();
+                }else {
+                    addCollect(goodsId, user.getMuserName());
+                }
+            }else {
+                CommonUtils.showLongToast("请先登录");
+            }
                 break;
             case R.id.share:
                 break;
         }
     }
+
+    private void delteCollect() {
+        NetDao.deleteCollect(this, goodsId, user.getMuserName(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if(result!=null){
+                    isCollect=!result.isSuccess();
+                    setCollectImage();
+                    //CommonUtils.showLongToast(result.getMsg());
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+    }
+
+    private void addCollect(int goodsId, String muserName) {
+
+        NetDao.addCollect(this, goodsId, muserName, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if(result!=null){
+                    isCollect=result.isSuccess();
+                    setCollectImage();
+
+                    CommonUtils.showLongToast(result.getMsg());
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+    }
+
+    private void setCollectImage() {
+        if(isCollect){
+            collectIn.setImageResource(R.mipmap.bg_collect_out);
+        }else{
+            collectIn.setImageResource(R.mipmap.bg_collect_in);
+        }
+    }
+
 }

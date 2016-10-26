@@ -99,6 +99,8 @@ public class CollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if(result.isSuccess()){
                     removeCollect(index);
                     CommonUtils.showLongToast(result.getMsg());
+                }else {
+                    CommonUtils.showLongToast(result.getMsg());
                 }
             }
 
