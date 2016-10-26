@@ -15,14 +15,26 @@ import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.activity.GoodsDetailsActivity;
 import ucai.cn.fulicenter.bean.CollectBean;
 import ucai.cn.fulicenter.utils.ImageLoader;
+import ucai.cn.fulicenter.utils.L;
 import ucai.cn.fulicenter.utils.MFGT;
 
 /**
  * Created by Administrator on 2016/10/26.
  */
-public class CollectAdapter extends RecyclerView.Adapter{
+public class CollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     Context mContext;
     ArrayList<CollectBean> mList;
+
+    boolean isMore=true;
+
+    public boolean isMore() {
+        return isMore;
+    }
+
+    public void setMore(boolean more) {
+        isMore = more;
+        notifyDataSetChanged();
+    }
 
     public CollectAdapter(Context context, ArrayList<CollectBean> mList) {
         this.mContext = context;
@@ -33,8 +45,10 @@ public class CollectAdapter extends RecyclerView.Adapter{
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder=null;
         if(viewType==I.TYPE_FOOTER){
+            L.e("TYPE=TYPE_FOOTER");
             holder=new FooterViewHolder(View.inflate(mContext,R.layout.item_footer,null));
         }else {
+            L.e("TYPE=TYPE_ITEM");
             holder=new CollectViewHolder(View.inflate(mContext,R.layout.item_collect,null));
         }
         return holder;
@@ -44,11 +58,13 @@ public class CollectAdapter extends RecyclerView.Adapter{
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(getItemViewType(position)==I.TYPE_FOOTER){
             ((FooterViewHolder)holder).tvFooter.setText(getFooter());
+            L.e("position="+position);
             return;
         }else {
-
             CollectViewHolder viewHolder= (CollectViewHolder) holder;
             final CollectBean collect=mList.get(position);
+            L.e("position="+position);
+            L.e("collect="+collect.toString());
             viewHolder.tvCategoryName.setText(collect.getGoodsName());
             ImageLoader.downloadImg(mContext,viewHolder.ivCollect,collect.getGoodsImg());
             viewHolder.ivCollect.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +87,7 @@ public class CollectAdapter extends RecyclerView.Adapter{
     }
 
     private String getFooter() {
-        return mList==null?"没有更多可加载":"加载更多数据";
+        return isMore?"加载更多数据":"没有更多可加载";
     }
 
     @Override
@@ -81,11 +97,22 @@ public class CollectAdapter extends RecyclerView.Adapter{
 
     @Override
     public int getItemViewType(int position) {
-        if(position==getItemCount()){
+        if(position==getItemCount()-1){
             return I.TYPE_FOOTER;
         }else {
             return I.TYPE_ITEM;
         }
+    }
+
+    public void initData(ArrayList<CollectBean> list) {
+        this.mList.clear();
+        this.mList.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void addData(ArrayList<CollectBean> list) {
+        this.mList.addAll(list);
+        notifyDataSetChanged();
     }
 
     class CollectViewHolder extends RecyclerView.ViewHolder{
@@ -95,7 +122,7 @@ public class CollectAdapter extends RecyclerView.Adapter{
             super(itemView);
             ivCollect= (ImageView) itemView.findViewById(R.id.iv_collect_goods);
             ivDelete= (ImageView) itemView.findViewById(R.id.iv_delete);
-            tvCategoryName= (TextView) itemView.findViewById(R.id.tv_Category_Goods_Name);
+            tvCategoryName= (TextView) itemView.findViewById(R.id.tv_goods_name);
 
         }
     }

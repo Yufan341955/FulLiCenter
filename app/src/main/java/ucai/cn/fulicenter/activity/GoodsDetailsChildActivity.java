@@ -116,7 +116,7 @@ public class GoodsDetailsChildActivity extends AppCompatActivity {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 mAdapter.setMore(false);
-                if (result == null && result.length == 0) {
+                if (result == null || result.length == 0) {
                     return;
                 }
                 ArrayList<NewGoodsBean> list = ConvertUtils.array2List(result);

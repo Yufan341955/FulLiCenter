@@ -1,11 +1,13 @@
 package ucai.cn.fulicenter.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ucai.cn.fulicenter.FuLiCenterApplication;
 import ucai.cn.fulicenter.R;
+import ucai.cn.fulicenter.activity.CollectActivity;
 import ucai.cn.fulicenter.activity.LoginActivity;
 import ucai.cn.fulicenter.activity.MainActivity;
 import ucai.cn.fulicenter.activity.UpdatePersonActivity;
@@ -56,7 +59,17 @@ public class PersonFragment extends BaseFragment {
     MainActivity mContext;
     @Bind(R.id.m_Persion_My_Member_Card)
     RelativeLayout mPersionMyMemberCard;
-
+    @Bind(R.id.lin_collect)
+    LinearLayout linCollect;
+    @Bind(R.id.m_Persion_See_Buyed_Treasure)
+    LinearLayout mPersionSeeBuyedTreasure;
+    @Bind(R.id.m_Persion_My_All_Card)
+    RelativeLayout mPersionMyAllCard;
+    @Bind(R.id.m_Persion_My_Live_Card)
+    RelativeLayout mPersionMyLiveCard;
+    @Bind(R.id.m_Persion_My_Online_Shop)
+    RelativeLayout mPersionMyOnlineShop;
+    UserAvatar user;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,7 +93,7 @@ public class PersonFragment extends BaseFragment {
         if (user == null) {
             MFGT.startActivity(mContext, LoginActivity.class);
         } else {
-           downloadUserByUserName(user.getMuserName());
+            downloadUserByUserName(user.getMuserName());
             getCollectCount(user.getMuserName());
 //            mPersionUserNick.setText(user.getMuserNick());
 //            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mPersionUserAvatar);
@@ -89,37 +102,37 @@ public class PersonFragment extends BaseFragment {
     }
 
     private void getCollectCount(String muserName) {
-       NetDao.getCollectCount(mContext, muserName, new OkHttpUtils.OnCompleteListener<MessageBean>() {
-           @Override
-           public void onSuccess(MessageBean result) {
+        NetDao.getCollectCount(mContext, muserName, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
 
-               L.e("result="+result.toString());
-               if(result.isSuccess()){
-                   L.e("CollectCount="+result.getMsg());
-                   mPersionCollectTreasure.setText(result.getMsg());
-                   L.e("CollectCount="+result.getMsg());
-               }else {
-                   L.e("NOTonSuccess");
-                   mPersionCollectTreasure.setText(result.getMsg());
-               }
-           }
+                L.e("result=" + result.toString());
+                if (result.isSuccess()) {
+                    L.e("CollectCount=" + result.getMsg());
+                    mPersionCollectTreasure.setText(result.getMsg());
+                    L.e("CollectCount=" + result.getMsg());
+                } else {
+                    L.e("NOTonSuccess");
+                    mPersionCollectTreasure.setText(result.getMsg());
+                }
+            }
 
-           @Override
-           public void onError(String error) {
+            @Override
+            public void onError(String error) {
 
-           }
-       });
+            }
+        });
     }
 
     private void downloadUserByUserName(String muserName) {
         NetDao.findUserByUserName(mContext, muserName, new OkHttpUtils.OnCompleteListener<Result>() {
             @Override
             public void onSuccess(Result result) {
-                if(result!=null) {
-                    if(result.isRetMsg()){
-                        String json=result.getRetData().toString();
-                        Gson gson=new Gson();
-                        UserAvatar user=gson.fromJson(json,UserAvatar.class);
+                if (result != null) {
+                    if (result.isRetMsg()) {
+                        String json = result.getRetData().toString();
+                        Gson gson = new Gson();
+                        user = gson.fromJson(json, UserAvatar.class);
                         mPersionUserNick.setText(user.getMuserNick());
                         ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mPersionUserAvatar);
 
@@ -145,7 +158,7 @@ public class PersonFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.m_Persion_Setting, R.id.m_Persion_UserAvatar})
+    @OnClick({R.id.m_Persion_Setting, R.id.m_Persion_UserAvatar,R.id.lin_collect})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.m_Persion_Setting:
@@ -153,6 +166,12 @@ public class PersonFragment extends BaseFragment {
                 break;
             case R.id.m_Persion_UserAvatar:
                 MFGT.startActivity(mContext, UpdatePersonActivity.class);
+                break;
+            case R.id.lin_collect:
+                L.e("startActivity(CollectActivity.class)");
+                Intent intent=new Intent(mContext, CollectActivity.class);
+                intent.putExtra("userName",user.getMuserName());
+                MFGT.startActivity(mContext,intent);
                 break;
         }
     }
@@ -162,4 +181,6 @@ public class PersonFragment extends BaseFragment {
         super.onResume();
         initData();
     }
+
+
 }
