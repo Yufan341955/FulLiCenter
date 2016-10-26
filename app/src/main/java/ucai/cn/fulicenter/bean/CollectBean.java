@@ -23,7 +23,7 @@ public class CollectBean {
     private String goodsEnglishName;
     private String goodsThumb;
     private String goodsImg;
-    private long addTime;
+    private String addTime;
 
     public int getId() {
         return id;
@@ -81,11 +81,11 @@ public class CollectBean {
         this.goodsImg = goodsImg;
     }
 
-    public long getAddTime() {
+    public String getAddTime() {
         return addTime;
     }
 
-    public void setAddTime(long addTime) {
+    public void setAddTime(String addTime) {
         this.addTime = addTime;
     }
 
