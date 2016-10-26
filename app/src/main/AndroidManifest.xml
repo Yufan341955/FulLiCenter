@@ -26,6 +26,7 @@
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.UpdatePersonActivity" />
         <activity android:name=".activity.UpdateNickActivity" />
+        <activity android:name=".activity.CollectActivity"></activity>
     </application>
 
 </manifest>
