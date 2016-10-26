@@ -19,6 +19,7 @@ import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.adapter.CollectAdapter;
 import ucai.cn.fulicenter.bean.CollectBean;
 import ucai.cn.fulicenter.utils.ConvertUtils;
+import ucai.cn.fulicenter.utils.MFGT;
 import ucai.cn.fulicenter.utils.NetDao;
 import ucai.cn.fulicenter.utils.OkHttpUtils;
 
@@ -149,5 +150,6 @@ public class CollectActivity extends AppCompatActivity {
 
     @OnClick(R.id.backAuto)
     public void onClick() {
+        MFGT.finish(this);
     }
 }

@@ -1,6 +1,8 @@
 package ucai.cn.fulicenter.utils;
 
 import android.content.Context;
+import android.os.Message;
+import android.support.v4.content.ContextCompat;
 
 import java.io.File;
 
@@ -127,7 +129,14 @@ public class NetDao {
                 .targetClass(CollectBean[].class)
                 .execute(listener);
     }
-
+    public static void deleteCollect(Context context, int goodsId, String username, OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils=new OkHttpUtils<MessageBean>(context);
+        utils.setRequestUrl(I.REQUEST_DELETE_COLLECT)
+                .addParam(I.Goods.KEY_GOODS_ID,goodsId+"")
+                .addParam(I.USER_NAME,username)
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
 
 
 }

@@ -14,9 +14,13 @@ import ucai.cn.fulicenter.I;
 import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.activity.GoodsDetailsActivity;
 import ucai.cn.fulicenter.bean.CollectBean;
+import ucai.cn.fulicenter.bean.MessageBean;
+import ucai.cn.fulicenter.utils.CommonUtils;
 import ucai.cn.fulicenter.utils.ImageLoader;
 import ucai.cn.fulicenter.utils.L;
 import ucai.cn.fulicenter.utils.MFGT;
+import ucai.cn.fulicenter.utils.NetDao;
+import ucai.cn.fulicenter.utils.OkHttpUtils;
 
 /**
  * Created by Administrator on 2016/10/26.
@@ -66,6 +70,7 @@ public class CollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             L.e("position="+position);
             L.e("collect="+collect.toString());
             viewHolder.tvCategoryName.setText(collect.getGoodsName());
+            final String username=collect.getUserName();
             ImageLoader.downloadImg(mContext,viewHolder.ivCollect,collect.getGoodsImg());
             viewHolder.ivCollect.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -75,17 +80,38 @@ public class CollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     MFGT.startActivity(mContext,intent);
                 }
             });
-//            viewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
+            final int index=position;
+            viewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                  delteCollect(index,username,collect.getGoodsId());
+                }
+            });
 
         }
 
     }
 
+    private void delteCollect(final int index, String username, int goodsId) {
+        NetDao.deleteCollect(mContext, goodsId, username, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if(result.isSuccess()){
+                    removeCollect(index);
+                    CommonUtils.showLongToast(result.getMsg());
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+    }
+    public void removeCollect(int index){
+        this.mList.remove(index);
+        notifyDataSetChanged();
+    }
     private String getFooter() {
         return isMore?"加载更多数据":"没有更多可加载";
     }
