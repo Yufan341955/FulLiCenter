@@ -45,7 +45,56 @@ public class CollectActivity extends AppCompatActivity {
         username=getIntent().getStringExtra("userName");
         initView();
         initData();
+        setListener();
 
+    }
+
+    private void setListener() {
+        setPullDownListener();
+        setPullUpListener();
+        mManger.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position == mList.size()) {
+                    return 2;
+                }
+                return 1;
+            }
+        });
+    }
+
+    private void setPullUpListener() {
+        rvNewGoods.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int lastPosition = mManger.findLastVisibleItemPosition();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && mAdapter.isMore() && lastPosition >= mAdapter.getItemCount() - 1) {
+                    mPageId++;
+                    downloadCollect(mPageId, I.ACTION_PULL_UP);
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int firstposition = mManger.findFirstVisibleItemPosition();
+                Srl.setEnabled(firstposition == 0);
+            }
+        });
+    }
+
+    private void setPullDownListener() {
+        Srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Srl.setEnabled(true);
+                Srl.setRefreshing(true);
+                tvRefesh.setVisibility(View.VISIBLE);
+                mPageId = 1;
+                downloadCollect(mPageId, I.ACTION_PULL_DOWN);
+            }
+        });
     }
 
     private void initView() {
