@@ -51,6 +51,7 @@ public interface I {
     int CATEGORY_GOOD=1;
     int CAT_ID=0;
     String AVATAR_SUFFIX ="m_avatar_suffix";
+    String USER_NAME ="userName" ;
 
     interface Goods {
         String KEY_RESULT = "result";

@@ -9,6 +9,7 @@ import ucai.cn.fulicenter.bean.BoutiqueBean;
 import ucai.cn.fulicenter.bean.CategoryChildBean;
 import ucai.cn.fulicenter.bean.CategoryGroupBean;
 import ucai.cn.fulicenter.bean.GoodsDetailsBean;
+import ucai.cn.fulicenter.bean.MessageBean;
 import ucai.cn.fulicenter.bean.NewGoodsBean;
 import ucai.cn.fulicenter.bean.Result;
 
@@ -108,11 +109,11 @@ public class NetDao {
                 .targetClass(Result.class)
                 .execute(listener);
     }
-    public static void getCollectCount(Context context, String username, OkHttpUtils.OnCompleteListener<String> listener){
-        OkHttpUtils<String> utils=new OkHttpUtils<String>(context);
+    public static void getCollectCount(Context context, String username, OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils=new OkHttpUtils<MessageBean>(context);
         utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
-                .addParam(I.User.USER_NAME,username)
-                .targetClass(String.class)
+                .addParam(I.USER_NAME,username)
+                .targetClass(MessageBean.class)
                 .execute(listener);
 
     }

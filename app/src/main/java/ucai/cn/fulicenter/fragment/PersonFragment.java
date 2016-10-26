@@ -1,6 +1,5 @@
 package ucai.cn.fulicenter.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -20,13 +19,14 @@ import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.activity.LoginActivity;
 import ucai.cn.fulicenter.activity.MainActivity;
 import ucai.cn.fulicenter.activity.UpdatePersonActivity;
+import ucai.cn.fulicenter.bean.MessageBean;
 import ucai.cn.fulicenter.bean.Result;
 import ucai.cn.fulicenter.bean.UserAvatar;
 import ucai.cn.fulicenter.utils.ImageLoader;
+import ucai.cn.fulicenter.utils.L;
 import ucai.cn.fulicenter.utils.MFGT;
 import ucai.cn.fulicenter.utils.NetDao;
 import ucai.cn.fulicenter.utils.OkHttpUtils;
-import ucai.cn.fulicenter.utils.ResultUtils;
 
 /**
  * Created by Administrator on 2016/10/24.
@@ -89,7 +89,26 @@ public class PersonFragment extends BaseFragment {
     }
 
     private void getCollectCount(String muserName) {
+       NetDao.getCollectCount(mContext, muserName, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+           @Override
+           public void onSuccess(MessageBean result) {
 
+               L.e("result="+result.toString());
+               if(result.isSuccess()){
+                   L.e("CollectCount="+result.getMsg());
+                   mPersionCollectTreasure.setText(result.getMsg());
+                   L.e("CollectCount="+result.getMsg());
+               }else {
+                   L.e("NOTonSuccess");
+                   mPersionCollectTreasure.setText(result.getMsg());
+               }
+           }
+
+           @Override
+           public void onError(String error) {
+
+           }
+       });
     }
 
     private void downloadUserByUserName(String muserName) {

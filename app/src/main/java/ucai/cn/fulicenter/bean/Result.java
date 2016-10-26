@@ -13,7 +13,7 @@ public class Result {
 
     private int retCode;
     private boolean retMsg;
-    private Object retData;
+    private RetData retData;
 
     public int getRetCode() {
         return retCode;
@@ -31,11 +31,11 @@ public class Result {
         this.retMsg = retMsg;
     }
 
-    public Object getRetData() {
+    public RetData getRetData() {
         return retData;
     }
 
-    public void setRetData(Object retData) {
+    public void setRetData(RetData retData) {
         this.retData = retData;
     }
 
