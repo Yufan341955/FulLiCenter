@@ -178,6 +178,8 @@ public class GoodsDetailsActivity extends AppCompatActivity {
             }
                 break;
             case R.id.share:
+
+
                 break;
         }
     }
