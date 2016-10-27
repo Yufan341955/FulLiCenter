@@ -23,6 +23,7 @@ import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.bean.CartBean;
 import ucai.cn.fulicenter.bean.GoodsDetailsBean;
 import ucai.cn.fulicenter.bean.MessageBean;
+import ucai.cn.fulicenter.utils.CommonUtils;
 import ucai.cn.fulicenter.utils.ImageLoader;
 import ucai.cn.fulicenter.utils.L;
 import ucai.cn.fulicenter.utils.NetDao;
@@ -46,9 +47,12 @@ public class CartAdapter extends RecyclerView.Adapter {
         CartViewHolder holder = new CartViewHolder(LayoutInflater.from(context).inflate(R.layout.item_cart,parent,false));
         return holder;
     }
-
+ public void remove(int index){
+     mList.remove(index);
+     notifyDataSetChanged();
+ }
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final CartViewHolder viewHolder= (CartViewHolder) holder;
         final CartBean cart=mList.get(position);
         GoodsDetailsBean goods=cart.getGoods();
@@ -80,7 +84,7 @@ public class CartAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 if(cart.getCount()==1){
-                    deleteCart(cart.getId());
+                    deleteCart(cart.getId(),position);
 
                 }else {
                     int count=cart.getCount()-1;
@@ -92,8 +96,23 @@ public class CartAdapter extends RecyclerView.Adapter {
 
     }
 
-    private void deleteCart(int id) {
+    private void deleteCart(int id, final int index) {
+           NetDao.deleteCart(context, id, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+               @Override
+               public void onSuccess(MessageBean result) {
+                   if(result!=null){
+                       if(result.isSuccess()){
+                           CommonUtils.showLongToast(result.getMsg());
+                           remove(index);
+                       }
+                   }
+               }
 
+               @Override
+               public void onError(String error) {
+
+               }
+           });
     }
 
     @Override

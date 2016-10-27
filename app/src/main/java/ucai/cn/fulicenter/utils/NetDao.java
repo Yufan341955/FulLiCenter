@@ -174,4 +174,11 @@ public class NetDao {
                 .targetClass(MessageBean.class)
                 .execute(listener);
     }
+    public static void deleteCart(Context context, int CartId, OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils=new OkHttpUtils<MessageBean>(context);
+        utils.setRequestUrl(I.REQUEST_DELETE_CART)
+                .addParam(I.Cart.ID,CartId+"")
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
 }
