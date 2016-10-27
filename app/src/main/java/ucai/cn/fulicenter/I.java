@@ -52,7 +52,7 @@ public interface I {
     int CAT_ID=0;
     String AVATAR_SUFFIX ="m_avatar_suffix";
     String USER_NAME ="userName" ;
-    String BROADCAST_UPDATECART = "ucai.cn.update.cart";
+    String BROADCAST_UPDATECART = "ucai.cn.update";
 
     interface Goods {
         String KEY_RESULT = "result";

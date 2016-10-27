@@ -91,7 +91,8 @@ public class PersonFragment extends BaseFragment {
     protected void initData() {
         UserAvatar user = FuLiCenterApplication.getUser();
         if (user == null) {
-            MFGT.startActivity(mContext, LoginActivity.class);
+           // MFGT.startActivity(mContext, LoginActivity.class);
+            return;
         } else {
             downloadUserByUserName(user.getMuserName());
             getCollectCount(user.getMuserName());

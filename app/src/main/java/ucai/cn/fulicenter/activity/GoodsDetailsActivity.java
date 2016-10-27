@@ -165,7 +165,7 @@ public class GoodsDetailsActivity extends AppCompatActivity {
         MFGT.finish(this);
     }
 
-    @OnClick({R.id.collect_in, R.id.share})
+    @OnClick({R.id.collect_in, R.id.share,R.id.cart})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.collect_in:
@@ -182,7 +182,34 @@ public class GoodsDetailsActivity extends AppCompatActivity {
             case R.id.share:
                 showShare();
                 break;
+            case R.id.cart:
+                if(user!=null) {
+                    addIntoCart();
+                }else {
+                    CommonUtils.showLongToast("请先登录");
+                }
+                break;
         }
+    }
+
+    private void addIntoCart() {
+       NetDao.addCart(this, goodsId, user.getMuserName(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+           @Override
+           public void onSuccess(MessageBean result) {
+               if(result!=null){
+                   if(result.isSuccess()){
+                       CommonUtils.showLongToast("商品添加到购物车");
+                   }else {
+                       CommonUtils.showLongToast(result.getMsg());
+                   }
+               }
+           }
+
+           @Override
+           public void onError(String error) {
+
+           }
+       });
     }
 
     private void delteCollect() {
