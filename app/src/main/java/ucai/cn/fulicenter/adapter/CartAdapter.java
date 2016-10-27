@@ -72,7 +72,7 @@ public class CartAdapter extends RecyclerView.Adapter {
         TextView tvOnePerice;
         public CartViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(context,itemView);
+            ButterKnife.bind(this,itemView);
         }
     }
 }
