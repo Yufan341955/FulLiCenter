@@ -22,8 +22,11 @@ import ucai.cn.fulicenter.I;
 import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.bean.CartBean;
 import ucai.cn.fulicenter.bean.GoodsDetailsBean;
+import ucai.cn.fulicenter.bean.MessageBean;
 import ucai.cn.fulicenter.utils.ImageLoader;
 import ucai.cn.fulicenter.utils.L;
+import ucai.cn.fulicenter.utils.NetDao;
+import ucai.cn.fulicenter.utils.OkHttpUtils;
 
 /**
  * Created by Administrator on 2016/10/27.
@@ -57,7 +60,6 @@ public class CartAdapter extends RecyclerView.Adapter {
             viewHolder.tvOnePerice.setText(goods.getCurrencyPrice());
             ImageLoader.downloadImg(context,viewHolder.ivGoodsIm,goods.getGoodsThumb());
         }
-
         viewHolder.tvCount.setText("("+cart.getCount()+")");
         viewHolder.rbtnChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -66,6 +68,31 @@ public class CartAdapter extends RecyclerView.Adapter {
                 context.sendBroadcast(new Intent(I.BROADCAST_UPDATECART));
             }
         });
+        viewHolder.ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int count=cart.getCount()+1;
+                addCart(cart.getId(), count, false);
+                viewHolder.tvCount.setText("("+count+")");
+            }
+        });
+        viewHolder.ivDelet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(cart.getCount()==1){
+                    deleteCart(cart.getId());
+
+                }else {
+                    int count=cart.getCount()-1;
+                    addCart(cart.getId(), count, false);
+                    viewHolder.tvCount.setText("("+count+")");
+                }
+            }
+        });
+
+    }
+
+    private void deleteCart(int id) {
 
     }
 
@@ -91,10 +118,30 @@ public class CartAdapter extends RecyclerView.Adapter {
         TextView tvCount;
         @Bind(R.id.tv_OnePerice)
         TextView tvOnePerice;
-        public CartViewHolder(View itemView) {
+        @Bind(R.id.iv_de)
+        ImageView ivDelet;
+
+        public CartViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-
         }
+    }
+
+    private void addCart(int CartId, int count, boolean ischecked) {
+        NetDao.updateCart(context, CartId, count, ischecked, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if(result!=null){
+                    if(result.isSuccess()){
+
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
     }
 }

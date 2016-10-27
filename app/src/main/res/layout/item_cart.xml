@@ -57,6 +57,7 @@
                 android:textColor="@color/black2"
                 />
             <ImageView
+                android:id="@+id/iv_de"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"

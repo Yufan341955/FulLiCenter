@@ -175,8 +175,11 @@ public class CartFragment extends BaseFragment {
             L.e("UpdateCartReceiver.onReceive()1");
             sumPrice();
             L.e("UpdateCartReceiver.onReceive()2");
+
         }
     }
+
+
 
     @Override
     public void onDestroy() {

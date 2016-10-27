@@ -165,4 +165,13 @@ public class NetDao {
     }
 
 
+    public static void updateCart(Context context, int CartId, int count,boolean ischecked, OkHttpUtils.OnCompleteListener<MessageBean> listener) {
+        OkHttpUtils<MessageBean> utils=new OkHttpUtils<MessageBean>(context);
+        utils.setRequestUrl(I.REQUEST_UPDATE_CART)
+                .addParam(I.Cart.ID,CartId+"")
+                .addParam(I.Cart.COUNT,count+"")
+                .addParam(I.Cart.IS_CHECKED,ischecked+"")
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
 }
