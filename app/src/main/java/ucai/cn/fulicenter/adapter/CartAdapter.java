@@ -2,11 +2,14 @@ package ucai.cn.fulicenter.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -16,6 +19,7 @@ import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.bean.CartBean;
 import ucai.cn.fulicenter.bean.GoodsDetailsBean;
 import ucai.cn.fulicenter.utils.ImageLoader;
+import ucai.cn.fulicenter.utils.L;
 
 /**
  * Created by Administrator on 2016/10/27.
@@ -32,7 +36,7 @@ public class CartAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        CartViewHolder holder = new CartViewHolder(View.inflate(context, R.layout.item_cart, null));
+        CartViewHolder holder = new CartViewHolder(LayoutInflater.from(context).inflate(R.layout.item_cart,parent,false));
         return holder;
     }
 
@@ -42,7 +46,10 @@ public class CartAdapter extends RecyclerView.Adapter {
         CartBean cart=mList.get(position);
         viewHolder.rbtnChecked.setChecked(false);
         if(cart.getGoods()!=null){
-            GoodsDetailsBean goods= (GoodsDetailsBean) cart.getGoods();
+            Gson gson=new Gson();
+            String json=cart.getGoods().toString();
+            L.e("goods="+json);
+            GoodsDetailsBean goods=cart.getGoods();
             viewHolder.tvGoodsName.setText(goods.getGoodsName());
             viewHolder.tvOnePerice.setText(goods.getCurrencyPrice());
             ImageLoader.downloadImg(context,viewHolder.ivGoodsIm,goods.getGoodsThumb());
@@ -55,6 +62,12 @@ public class CartAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return mList == null ? 0 : mList.size();
+    }
+
+    public void init(ArrayList<CartBean> list) {
+        mList.clear();
+        mList.addAll(list);
+        notifyDataSetChanged();
     }
 
     class CartViewHolder extends RecyclerView.ViewHolder {
