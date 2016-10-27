@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent=new Intent(LoginActivity.this,LoginActivity.class);
                             intent.putExtra("name",user.getMuserName());
                             setResult(5,intent);
-                            finish();
+                            MFGT.finish(LoginActivity.this);
                            // MFGT.finish(LoginActivity.this);
                         }else {
                             CommonUtils.showLongToast("数据库操作异常");
@@ -137,5 +137,11 @@ public class LoginActivity extends AppCompatActivity {
                 break;
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        MFGT.finish(this);
     }
 }

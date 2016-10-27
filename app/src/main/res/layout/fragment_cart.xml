@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
     <RelativeLayout
+        android:id="@+id/Layout_Buy"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="75dp"
@@ -13,7 +15,7 @@
             android:id="@+id/tv_AllPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="合计：￥5000"
+            android:text="合计：￥0"
             android:layout_centerVertical="true"
             android:textSize="20sp"
             android:textColor="@color/orange"
@@ -30,6 +32,16 @@
             android:textSize="20sp"
             />
     </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_NoCart"
+        android:layout_marginTop="250dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="购物车空空如野"
+        android:textColor="@color/orange"
+        android:textSize="30sp"
+        android:visibility="gone"
+        />
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl"
         android:layout_width="match_parent"

@@ -75,8 +75,9 @@ public class UpdatePersonActivity extends AppCompatActivity {
             case R.id.btn_exists:
                 SharePrefrenceUtils.getInstance(this).removeUser();
                 FuLiCenterApplication.setUser(null);
+                MFGT.finish(this);
                 MFGT.startActivity(UpdatePersonActivity.this, LoginActivity.class);
-                this.finish();
+
                 break;
         }
     }

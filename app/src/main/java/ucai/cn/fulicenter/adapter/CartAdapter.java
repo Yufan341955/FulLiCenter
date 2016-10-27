@@ -1,10 +1,13 @@
 package ucai.cn.fulicenter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import ucai.cn.fulicenter.I;
 import ucai.cn.fulicenter.R;
 import ucai.cn.fulicenter.bean.CartBean;
 import ucai.cn.fulicenter.bean.GoodsDetailsBean;
@@ -31,7 +35,7 @@ public class CartAdapter extends RecyclerView.Adapter {
 
     public CartAdapter(Context context, ArrayList<CartBean> mList) {
         this.context = context;
-        this.mList = mList;
+       this.mList = mList;
     }
 
     @Override
@@ -42,20 +46,26 @@ public class CartAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        CartViewHolder viewHolder= (CartViewHolder) holder;
-        CartBean cart=mList.get(position);
-        viewHolder.rbtnChecked.setChecked(false);
-        if(cart.getGoods()!=null){
+        final CartViewHolder viewHolder= (CartViewHolder) holder;
+        final CartBean cart=mList.get(position);
+        GoodsDetailsBean goods=cart.getGoods();
+        if(goods!=null){
             Gson gson=new Gson();
             String json=cart.getGoods().toString();
             L.e("goods="+json);
-            GoodsDetailsBean goods=cart.getGoods();
             viewHolder.tvGoodsName.setText(goods.getGoodsName());
             viewHolder.tvOnePerice.setText(goods.getCurrencyPrice());
             ImageLoader.downloadImg(context,viewHolder.ivGoodsIm,goods.getGoodsThumb());
         }
-        viewHolder.tvCount.setText("("+cart.getCount()+")");
 
+        viewHolder.tvCount.setText("("+cart.getCount()+")");
+        viewHolder.rbtnChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                cart.setChecked(isChecked);
+                context.sendBroadcast(new Intent(I.BROADCAST_UPDATECART));
+            }
+        });
 
     }
 
@@ -65,14 +75,12 @@ public class CartAdapter extends RecyclerView.Adapter {
     }
 
     public void init(ArrayList<CartBean> list) {
-        mList.clear();
-        mList.addAll(list);
-        notifyDataSetChanged();
+        mList=list;
     }
 
     class CartViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.rbtn_checked)
-        RadioButton rbtnChecked;
+        CheckBox rbtnChecked;
         @Bind(R.id.iv_GoodsIm)
         ImageView ivGoodsIm;
         @Bind(R.id.tv_GoodsName)
@@ -86,6 +94,7 @@ public class CartAdapter extends RecyclerView.Adapter {
         public CartViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+
         }
     }
 }

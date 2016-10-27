@@ -20,6 +20,7 @@ import ucai.cn.fulicenter.fragment.CartFragment;
 import ucai.cn.fulicenter.fragment.CategoryFragment;
 import ucai.cn.fulicenter.fragment.NewGoodsFragment;
 import ucai.cn.fulicenter.fragment.PersonFragment;
+import ucai.cn.fulicenter.utils.L;
 import ucai.cn.fulicenter.utils.MFGT;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvCarthint;
     @Bind(R.id.rbtn_prosen)
     RadioButton rbtnProsen;
-    int index;
+    int index=0;
     RadioButton[] rbs;
     Fragment[] mFragments;
 
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onCheckedChange(View v) {
-
+               index=0;
         switch (v.getId()) {
             case R.id.rbtn_newGoods:
                 index=0;
@@ -91,10 +92,17 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.rbtn_cart:
-                index=3;
+                if(FuLiCenterApplication.getUser()==null){
+                    L.e("carttoLoginActivity");
+                    Intent intent=new Intent(this,LoginActivity.class);
+                    startActivityForResult(intent,9);
+                }else {
+                    index=3;
+                }
                 break;
             case R.id.rbtn_prosen:
                 if(FuLiCenterApplication.getUser()==null){
+                    L.e("metoLoginActivity");
                     Intent intent=new Intent(this,LoginActivity.class);
                     startActivityForResult(intent,4);
                     //MFGT.startActivity(this,LoginActivity.class);
@@ -146,8 +154,10 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode){
             case 4:
                 index=4;
-
-            break;
+                break;
+            case 9:
+                index=3;
+                break;
         }
     }
 }

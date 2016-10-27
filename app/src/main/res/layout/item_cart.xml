@@ -6,13 +6,13 @@
     android:gravity="center_vertical"
     android:background="@color/white"
     >
-    <RadioButton
+    <CheckBox
 
         android:layout_marginLeft="20dp"
         android:id="@+id/rbtn_checked"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:drawableTop="@mipmap/checkbox_normal"
+        android:drawableTop="@drawable/selector_menu_cart_checked"
         android:button="@null"
         android:checked="false"
         />
