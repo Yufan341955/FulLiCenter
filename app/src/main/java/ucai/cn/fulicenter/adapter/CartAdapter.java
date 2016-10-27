@@ -77,33 +77,37 @@ public class CartAdapter extends RecyclerView.Adapter {
             public void onClick(View v) {
                 int count=cart.getCount()+1;
                 addCart(cart.getId(), count, false);
-                viewHolder.tvCount.setText("("+count+")");
+                mList.get(position).setCount(count);
+                context.sendBroadcast(new Intent(I.BROADCAST_UPDATECART));
+                viewHolder.tvCount.setText("("+mList.get(position).getCount()+")");
             }
         });
         viewHolder.ivDelet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(cart.getCount()==1){
-                    deleteCart(cart.getId(),position);
-
+                    deleteCart(cart.getId());
+                    remove(position);
                 }else {
                     int count=cart.getCount()-1;
                     addCart(cart.getId(), count, false);
-                    viewHolder.tvCount.setText("("+count+")");
+                    mList.get(position).setCount(count);
+                    viewHolder.tvCount.setText("("+mList.get(position).getCount()+")");
                 }
+                context.sendBroadcast(new Intent(I.BROADCAST_UPDATECART));
             }
         });
 
     }
 
-    private void deleteCart(int id, final int index) {
+    private void deleteCart(int id) {
            NetDao.deleteCart(context, id, new OkHttpUtils.OnCompleteListener<MessageBean>() {
                @Override
                public void onSuccess(MessageBean result) {
                    if(result!=null){
                        if(result.isSuccess()){
                            CommonUtils.showLongToast(result.getMsg());
-                           remove(index);
+
                        }
                    }
                }
@@ -121,7 +125,9 @@ public class CartAdapter extends RecyclerView.Adapter {
     }
 
     public void init(ArrayList<CartBean> list) {
+        mList.clear();
         mList=list;
+        notifyDataSetChanged();
     }
 
     class CartViewHolder extends RecyclerView.ViewHolder {
